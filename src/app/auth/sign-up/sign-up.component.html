@@ -1,0 +1,86 @@
+<div class="vh-100" style="background-color: #eee;">
+    <div class="container container-fluid px-1 py-5 mx-auto">
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                <h1 class="text-center mb-4 ">SignUp</h1>
+                <div class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>
+                <div class="formDisplay card">
+                    <form [formGroup]="registrationForm" (ngSubmit)="resgisterUser()" class="frm form-card">
+                        <div class="row justify-content-between text-left">
+                            <div class="input-field form-group  col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">First Name<span class="text-danger">
+                                        *</span></label>
+                                <input type="text" formControlName="firstName" />
+                                <p class="alert alert-danger" role="alert"
+                                    *ngIf="registrationForm.controls['firstName'].touched &&  registrationForm.controls['firstName'].hasError('required') ">
+                                    firstName is required
+                                </p>
+                            </div>
+                            <div class="input-field form-group  col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Surname <span class="text-danger">
+                                        *</span></label>
+                                <input type="text" formControlName="lastName" />
+                                <p class="alert alert-danger" role="alert"
+                                    *ngIf=" registrationForm.controls['lastName'].touched &&  registrationForm.controls['lastName'].hasError('required')">
+                                    lastName is required
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="input-field form-group  col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Email<span class="text-danger"> *</span></label>
+                                <input type="email" formControlName="email" />
+                                <small class="alert alert-danger" role="alert"
+                                    *ngIf=" registrationForm.controls['email'].touched &&  registrationForm.controls['email'].hasError('required') || registrationForm.controls['email'].hasError('pattern') ">
+                                    PLease Enter a valid Email-Id
+                                </small>
+                            </div>
+                            <div class="input-field form-group  col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Phone <span class="text-danger"> *</span></label>
+                                <input type="text" formControlName="PhoneNo"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                                <div class="alert alert-danger" role="alert"
+                                    *ngIf="registrationForm.controls['PhoneNo'].touched &&  registrationForm.controls['PhoneNo'].hasError('required')|| registrationForm.controls['PhoneNo'].hasError('pattern')">
+                                    PLease Enter a valid Contact Number
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-field form-group  col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">DOB <span class="text-danger"> *</span></label>
+                            <input type="date" formControlName="dateOfBirth" (change)="validateDOB($event)" />
+                            <p *ngIf="validateDateOfbirth || registrationForm.controls['dateOfBirth'].touched &&  registrationForm.controls['dateOfBirth'].hasError('required') "
+                                style="color: red"> Age must be greater than 12 </p>
+                        </div>
+
+                        <div class="row justify-content-between text-left">
+                            <div class="input-field form-group  col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Password <span class="text-danger"> *</span>
+                                </label>
+                                <input matInput [type]="showPassword ? 'password' : 'text'"
+                                    formControlName="password" />
+                                <mat-icon matSuffix (click)="togglePasswordVisibility()">
+                                    {{showPassword?'visibility_off':'visibility'}}
+                                </mat-icon>
+                            </div>
+                            <small class="alert alert-danger" role="alert" style=" float: right;"
+                                *ngIf="registrationForm.controls['password'].touched &&  registrationForm.controls['password'].hasError('required') || registrationForm.controls['password'].hasError('pattern') ">
+                                Password must contain more than 8 characters, 1 upper case letter, and
+                                1 special character
+                            </small>
+                        </div>
+                        <div class="row justify-content-end">
+                            <button type="submit">
+                                Submit
+                            </button>
+                        </div>
+                        <div>
+                            <label class="form-control-label px-3">Already Have a account ?</label>
+                            <button type="button" (click)="login()">LogIn</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
