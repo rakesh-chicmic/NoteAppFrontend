@@ -23,7 +23,8 @@ const route : Routes = [
     CommonModule,
     ReactiveFormsModule,
     MatIconModule,
-    RouterModule.forRoot(route)
+    RouterModule.forChild(route),
+    MatIconModule
   ]
 })
 export class AuthModule { }

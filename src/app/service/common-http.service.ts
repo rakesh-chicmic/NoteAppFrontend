@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { baseUrl } from 'src/environment';
 
 const headers = new HttpHeaders({
   'content-type' : 'application/json',
@@ -22,7 +22,7 @@ export class CommonHttpService {
 
   httpPost(url : string , data : any)
   {
-    return this.http.get(`${baseUrl}${url}` ,data)
+    return this.http.post(`${baseUrl}${url}` ,data)
   }
 
   httpPut(url: string , data : any)

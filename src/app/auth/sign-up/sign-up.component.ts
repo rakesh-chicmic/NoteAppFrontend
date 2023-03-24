@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RegisterService } from 'src/app/service/register.service';
 import { REGEX } from 'src/app/utils/constant';
 
 @Component({
@@ -16,12 +17,12 @@ export class SignUpComponent {
   validateDateOfbirth: boolean =false;
   btnclick: boolean =false ;
   registrationForm:FormGroup;
-  constructor( private route : Router , private fb:FormBuilder){
+  constructor( private route : Router , private fb:FormBuilder , private client : RegisterService){
       this.registrationForm = this.fb.group({
           firstName:['',Validators.required],
           lastName:['',Validators.required],
           email:['', Validators.compose([Validators.required,Validators.pattern(REGEX.EMAIL)])],
-          PhoneNo:['',Validators.compose([Validators.required,Validators.pattern("^[6-9]\\d{9}$")])],
+          phoneNo:['',Validators.compose([Validators.required,Validators.pattern("^[6-9]\\d{9}$")])],
           dateOfBirth:['',Validators.compose([Validators.required])],
           password:['',Validators.compose([Validators.required,Validators.pattern(REGEX.PASSWORD)])]
       })
@@ -31,16 +32,9 @@ export class SignUpComponent {
   {
       if(this.registrationForm.valid)
   {
-      // this.service.registerUser(this.registrationForm.value).subscribe((result:any)=>{
-      //     this.messageShow=true;
-      //    console.log(result)
-      //    if(result.isSuccess)
-      //    {
-      //     this.message= "Sign Up successful";
-      //     alert(this.message);
-      //     this.route.navigateByUrl('/login')
-      //    }
-      // })
+      this.client.signUpUser(this.registrationForm.value).subscribe((response)=>{
+        console.log(response);
+      })
   } else{
       Object.keys(this.registrationForm.controls).forEach(key=>this.registrationForm.controls[key].markAsTouched({onlySelf:true}))
   }

@@ -39,10 +39,10 @@
                             </div>
                             <div class="input-field form-group  col-sm-6 flex-column d-flex">
                                 <label class="form-control-label px-3">Phone <span class="text-danger"> *</span></label>
-                                <input type="text" formControlName="PhoneNo"
+                                <input type="text" formControlName="phoneNo"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
                                 <div class="alert alert-danger" role="alert"
-                                    *ngIf="registrationForm.controls['PhoneNo'].touched &&  registrationForm.controls['PhoneNo'].hasError('required')|| registrationForm.controls['PhoneNo'].hasError('pattern')">
+                                    *ngIf="registrationForm.controls['phoneNo'].touched &&  registrationForm.controls['phoneNo'].hasError('required')|| registrationForm.controls['phoneNo'].hasError('pattern')">
                                     PLease Enter a valid Contact Number
                                 </div>
                             </div>
