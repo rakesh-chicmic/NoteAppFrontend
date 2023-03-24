@@ -56,8 +56,8 @@ throw new Error('Method not implemented.');
     }
   }
 
-  showModal()
+  RegisterForm()
   {
-     //this.modalService.open(ForgotPassComponent)
+     this.route.navigateByUrl('auth/sign-in')
   }
 }

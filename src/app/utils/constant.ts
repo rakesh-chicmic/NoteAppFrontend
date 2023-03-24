@@ -26,7 +26,8 @@ export const REGEX = {
      profile : 'User/profile',
      IP : "http://192.180.2.128:5050/" ,
      profilePic : "File/Profileimage",
-     update : 'User/UpdateProfile'
+     update : 'User/UpdateProfile',
+     reset : ""
    },
 
    value :
