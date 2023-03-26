@@ -7,6 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';
 import { MainModule } from './main/main.module';
+import { MatDialogModule } from '@angular/material/dialog'
+import { MatInputModule }  from "@angular/material/input"
+import {  MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { MainModule } from './main/main.module';
     BrowserAnimationsModule,
     HttpClientModule,
     AuthModule,
-    MainModule
+    MainModule,
+    MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -15,6 +15,15 @@ const route : Routes = [
   },
   {
     path : 'login' , component: LoginComponent
+  },
+  {
+    path : 'forgot' , component: ForgetPasswordComponent
+  },
+  {
+    path : 'reset' , component: ResetPasswordComponent
+  },
+  {
+    path : 'change' , component: ChangePasswordComponent
   }
 ]
 @NgModule({
