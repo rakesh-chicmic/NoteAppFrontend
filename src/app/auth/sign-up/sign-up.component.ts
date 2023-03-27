@@ -22,7 +22,7 @@ export class SignUpComponent {
           firstName:['',Validators.required],
           lastName:['',Validators.required],
           email:['', Validators.compose([Validators.required,Validators.pattern(REGEX.EMAIL)])],
-          phoneNo:['',Validators.compose([Validators.required,Validators.pattern("^[6-9]\\d{9}$")])],
+          phone:['',Validators.compose([Validators.required,Validators.pattern("^[6-9]\\d{9}$")])],
           dateOfBirth:['',Validators.compose([Validators.required])],
           password:['',Validators.compose([Validators.required,Validators.pattern(REGEX.PASSWORD)])]
       })
@@ -32,8 +32,12 @@ export class SignUpComponent {
   {
       if(this.registrationForm.valid)
   {
-      this.client.signUpUser(this.registrationForm.value).subscribe((response)=>{
-        console.log(response);
+      this.client.signUpUser(this.registrationForm.value).subscribe((response :any)=>{
+        if(response.isSuccess)
+        {
+          this.route.navigate(['/main/notes']);
+          this.client.registerToken(response.data['token']);
+        }
       })
   } else{
       Object.keys(this.registrationForm.controls).forEach(key=>this.registrationForm.controls[key].markAsTouched({onlySelf:true}))

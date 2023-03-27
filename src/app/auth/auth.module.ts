@@ -8,22 +8,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AuthGaurdService } from '../utils/gaurds/auth-gaurd.service';
 
 const route : Routes = [
   {
-    path : 'sign-in' , component: SignUpComponent
+    path : 'sign-in' , component: SignUpComponent 
   },
   {
-    path : 'login' , component: LoginComponent
+    path : 'login' , component: LoginComponent 
   },
   {
-    path : 'forgot' , component: ForgetPasswordComponent
+    path : 'forgot' , component: ForgetPasswordComponent 
   },
   {
     path : 'reset' , component: ResetPasswordComponent
   },
   {
-    path : 'change' , component: ChangePasswordComponent
+    path : 'change' , component: ChangePasswordComponent 
   }
 ]
 @NgModule({

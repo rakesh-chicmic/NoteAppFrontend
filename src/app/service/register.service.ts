@@ -44,4 +44,9 @@ export class RegisterService {
     {
         return localStorage.getItem("token");
     }
+
+    isLoggedIn():boolean{
+      return !localStorage.getItem('token')
+    }
+
 }

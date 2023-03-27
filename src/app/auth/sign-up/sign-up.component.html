@@ -140,13 +140,13 @@
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                          <input type="text" formControlName="phoneNo"
+                          <input type="text" formControlName="phone"
                           oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="form-control" />
                           <label class="form-label" for="form3Example4cd">Phone Number  <span class="text-danger"> *</span></label>
                         </div>
                     </div>
                     <p class="alert alert-danger" role="alert"
-                        *ngIf="registrationForm.controls['phoneNo'].touched &&  registrationForm.controls['phoneNo'].hasError('required')|| registrationForm.controls['phoneNo'].hasError('pattern')">
+                        *ngIf="registrationForm.controls['phone'].touched &&  registrationForm.controls['phone'].hasError('required')|| registrationForm.controls['phone'].hasError('pattern')">
                         PLease Enter a valid Contact Number
                 </p>
 
@@ -177,7 +177,8 @@
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <button type="submit" class="btn btn-primary btn-lg">Register</button>
                     </div>
-  
+                   
+                      <button type="button" class="btn btn-primary" (click)="login()">login</button>
                   </form>
   
                 </div>

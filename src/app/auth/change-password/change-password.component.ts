@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterService } from 'src/app/service/register.service';
+import { REGEX } from 'src/app/utils/constant';
 
 @Component({
   selector: 'app-change-password',
@@ -10,31 +11,25 @@ import { RegisterService } from 'src/app/service/register.service';
 })
 export class ChangePasswordComponent {
 
-  email:string='';  
   message:string ='';
   messageShow=false;
-  constructor(private client : RegisterService,private route : Router){
-  }
-  ngOnInit(): void {
-    
+  changePasswordform : FormGroup;
+  constructor(private client : RegisterService,private route : Router, private fb : FormBuilder){
+    this.changePasswordform = this.fb.group({
+    oldPassword:['' , Validators.compose([Validators.required])],
+    newPassword: ['' , Validators.compose([Validators.required , Validators.pattern(REGEX.PASSWORD)])],
+    confirmPassword : ['' , Validators.compose([Validators.required , Validators.pattern(REGEX.PASSWORD)])]
+    })
   }
   showPassword: boolean = true;
     passwordsMatching = false;
     isConfirmPasswordDirty = false;
-    confirmPasswordClass = 'form-control'
-    changePasswordform = new FormGroup({
-        oldPassword:new FormControl(null,Validators.required),
-        newPassword: new FormControl(null,[Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]),
-        confirmPassword : new FormControl(null,[Validators.required,Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")])
-      
-    })
-    ChangePassword(data:FormGroup)
-    {
+    confirmPasswordClass = 'form-control';
 
-      if(data.value['newPassword'] !=data.value['confirmPassword'] )
+    ChangePassword(data:FormGroup)
+    { 
+      if(this.changePasswordform.valid)
       {
-         this.message='Enter same Password';
-      }
        this.client.changePassword(data.value['oldPassword'],data.value['newPassword']).subscribe((value :any)=>{
         console.log(value)
         this.messageShow =true;
@@ -46,18 +41,15 @@ export class ChangePasswordComponent {
          this.route.navigateByUrl('/login')
          }
 
-        else
-        {
-          this.message="Please Check the information filled";
-        }
-       });
-
-    }
-
-    get fControls()
+        })
+       }
+    else
     {
-        return this.changePasswordform.controls
+        Object.keys(this.changePasswordform.controls).forEach(key=>this.changePasswordform.controls[key].markAsTouched({onlySelf:true}))
     }
+  }
+
+
     checkPasswords(pw: string, cpw: string) {
         this.isConfirmPasswordDirty = true;
         if (pw == cpw) {
@@ -75,6 +67,6 @@ export class ChangePasswordComponent {
 
       GoBack()
       {
-        this.route.navigateByUrl('/home');
+        this.route.navigateByUrl('main/notes');
       }
 }
