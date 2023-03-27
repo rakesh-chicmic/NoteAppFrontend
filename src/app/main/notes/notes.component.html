@@ -1,32 +1,16 @@
 <app-navbar></app-navbar>
-
-<!-- <form class="example-form">
-  <mat-form-field class="example-full-width">
-    <mat-label>Type here ..... </mat-label>
-    <textarea matInput placeholder="Type a note"></textarea>
-  </mat-form-field>
-</form> -->
 <div class="model">
-   <div class="modal-content">
-       <input type="text" placeholder="Title" class="modal-title">
-       <input type="text" placeholder="Take a note ...." class="modal-text">
+   <div class="modal-content show">
+    <form ngForm="notesForm">
+       <input type="text" placeholder="Title" class="modal-title" >
+       <input type="text" placeholder="Take a note ...." class="modal-text" >
        <span class="modal-close-button">close </span>
-      </div>
+      </form>
+  </div>
       <main>
         <header>
           <img src="" alt="" srcset="">
         </header>
-
-        <!-- <div id="form-container">
-          <form id="form" autocomplete="off">
-              <input type="text" id="note-Title">
-              <input type="text" id="note-text"> 
-              <div id="form-button">
-               <button type="submit" id="submit-button"> edit</button>
-               <button type="submit" id="form-close-button"> close</button>
-              </div>
-          </form>
-        </div> -->
 
         <div id="notes"></div>
         <div id="placeholder"></div>

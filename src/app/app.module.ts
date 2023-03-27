@@ -12,6 +12,7 @@ import { MatInputModule }  from "@angular/material/input"
 import {  MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from './shared/shared.module';
+import { MatSidenavModule } from '@angular/material/sidenav'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SharedModule } from './shared/shared.module';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
+    MatSidenavModule,
     SharedModule
   ],
   providers: [],

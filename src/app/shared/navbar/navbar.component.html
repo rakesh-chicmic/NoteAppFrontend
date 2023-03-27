@@ -1,6 +1,9 @@
 <nav class="navbar navbar-dark bg-dark d-flex flex-row">
     <div class="container-fluid">
         <button (click)="showSidebar()"> <mat-icon>dehaze</mat-icon></button>
+        <!-- <button type="button" mat-button (click)="drawer.toggle()">
+          Toggle sidenav
+        </button> -->
     <div>
       <form class="d-flex input-group w-auto">
         <input
@@ -60,12 +63,11 @@
     </li>
 </ul> -->
 </div>
-</nav>
-
+<!-- <div>
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="close()"></button>
     </div>
     <div class="offcanvas-body">
       <div>
@@ -83,3 +85,13 @@
       </div>
     </div>
   </div>
+
+  </div> -->
+
+</nav>
+<!-- <mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p>Auto-resizing sidenav</p>
+    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+  </mat-drawer>
+</mat-drawer-container> -->

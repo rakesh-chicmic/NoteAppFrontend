@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
@@ -8,6 +9,16 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 })
 export class NotesComponent {
 
-  constructor(private dialog: MatDialog) {}
+  notes :string = '';
+notesForm: any;
+  constructor() {}
+  @HostListener('document:click')
+  clickout(event : any) {
+  console.log(event.target.value);
+  }
 
+  save()
+  {
+    console.log(this.notesForm.value);
+  }
 }

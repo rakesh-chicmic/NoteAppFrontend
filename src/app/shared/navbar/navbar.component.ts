@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
+  showFiller = false;
 constructor(private route : Router){}
 
 logOut()
@@ -22,6 +23,14 @@ changePass()
 
 showSidebar()
 {
-  
+
+  let element = document.getElementsByClassName('offcanvas')[0];
+  element.classList.add('show');
+}
+
+close()
+{
+  let element = document.getElementsByClassName('offcanvas')[0];
+  element.classList.remove('show');
 }
 }
