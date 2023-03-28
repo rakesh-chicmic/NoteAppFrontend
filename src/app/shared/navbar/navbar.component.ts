@@ -13,12 +13,12 @@ constructor(private route : Router){}
 logOut()
 {
  localStorage.clear();
- this.route.navigateByUrl("/auth/login")
+ this.route.navigateByUrl("/login")
 }
 
 changePass()
 {
-  this.route.navigateByUrl("/auth/change")
+  this.route.navigateByUrl("/change")
 }
 
 showSidebar()
@@ -27,10 +27,9 @@ showSidebar()
   let element = document.getElementsByClassName('offcanvas')[0];
   element.classList.add('show');
 }
-
-close()
+showProfile()
 {
-  let element = document.getElementsByClassName('offcanvas')[0];
-  element.classList.remove('show');
+  // let div = document.getElementsByClassName('modals')[0];
+  // div.classList.add('show');
 }
 }

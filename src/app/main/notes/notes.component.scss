@@ -1,13 +1,3 @@
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
-
-.example-full-width {
-  width: 100%;
-}
-
 
 // * {
 //   background-color: white;
@@ -20,10 +10,6 @@
 //   padding: 0;
 
 // }
-
-.main {
-  margin: 0 auto;
-}
 
 #placeholder {
   margin-top: 10vh !important;
@@ -99,7 +85,6 @@ margin-top: 2rem;
 
 .modal-title
 {
-  width: calc(100% - 10px);
   min-height: 43px;
   margin : 0 5px;
   font-size:1rem;
@@ -115,6 +100,23 @@ margin-top: 2rem;
   font-size: 14px;
 }
 
+.modal-text
+{
+  width: 400px;
+  min-height: 43px;
+  margin : 0 5px;
+  font-size:1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  letter-spacing:0.00625rem ;
+  border :2px solid black;
+  overflow: hidden;
+  position: relative;
+  color:#202124;
+  padding: 4px 16px 12px 0px;
+  min-height: 46px;
+  font-size: 14px;
+}
 
 #note-title
 {
@@ -126,7 +128,7 @@ margin-top: 2rem;
   font-weight: 500;
   line-height: 1.5rem;
   padding: 10px 10px;
-  border:0;
+  border:none;
 }
 
 #form-focus,input:focus
@@ -142,43 +144,6 @@ margin-top: 2rem;
   flex-direction: column;
 }
 
-#form-buttons
-{
-  display: none;
-  text-align: right;
-
-}
-
-#submit-button, #form-close-button
-{
-  margin: 0.2rem 0;
-  box-sizing: border-box;
-  color: rgba(0,0,0,0.87);
-  overflow: hidden;
-  text-overflow:ellipsis ;
-  white-space: nowrap;
-  letter-spacing: 0.01785714rem;
-  font-size: 0.875;
-  font-weight: 500;
-  line-height: 1.5rem;
-  height: 36px;
-  padding: 8px 24px;
-  border-radius: 4px;
-  border-color: transparent !important ;
-  background-color: rgb(251, 251,251);
-}
-
-#submit-button
-{
-  color: white;
-  background-color: #007bff;
-}
-
-#submit-button:hover ,#form-close-button:hover
-{
-   filter: brightness(95%);
-}
-
 .show
 {
   width: 300px;
@@ -187,5 +152,45 @@ margin-top: 2rem;
 
 .modal{
   width: 900px;
+  height: 800px;
+}
+
+
+.notes-content
+{
+  width: 400px;
+  height: 100px;
+  border-radius: 20px solid black;
+}
+
+.addNote
+{
+  width: 600px;
+  height: 100px;
+  margin: auto;
+  padding-top: 70px;
+}
+.showNote
+{
+  width: 700px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.display
+{
+  width: 300px;
+  height: 100px;
+}
+
+.container
+{
+  width: 1400px;
+  height: 800px ;
+}
+.sidebar
+{
+  width: 100px;
   height: 800px;
 }

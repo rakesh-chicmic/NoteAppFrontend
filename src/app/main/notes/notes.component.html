@@ -1,19 +1,80 @@
-<app-navbar></app-navbar>
-<div class="model">
-   <div class="modal-content show">
-    <form ngForm="notesForm">
-       <input type="text" placeholder="Title" class="modal-title" >
-       <input type="text" placeholder="Take a note ...." class="modal-text" >
-       <span class="modal-close-button">close </span>
-      </form>
-  </div>
-      <main>
-        <header>
-          <img src="" alt="" srcset="">
-        </header>
 
-        <div id="notes"></div>
-        <div id="placeholder"></div>
-        <p id="placeholder-text"> Notes You add appear here</p>
-      </main>
+<div class="d-flex flex-row">
+<div class="container">
+  <div class="addNote">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Note
+          </mat-panel-title>
+          <mat-panel-description>
+            <strong> Add Note ...</strong>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <button class="btn" (click)="pinNote()"><mat-icon>backup</mat-icon></button>
+        <div class="d-flex flex-column">
+          <form [formGroup]="notesForm" class="d-flex flex-column align-items-center">
+            <input type="text" placeholder="Title" class="modal-title" formControlName="title">
+            <input type="text" placeholder="Take a note ...." class="modal-text" formControlName="notesMessage">
+          </form>
+          <div class="d-flex justify-content-around">
+            <button class="btn"><mat-icon>person_add</mat-icon></button>
+            <button class="btn"><mat-icon> insert_photo</mat-icon></button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="showNotes" (click)="clickInside()">
+    <div *ngIf="(notesArray.length==0) then Ifpart ; else elsepart"></div>
+    <ng-template #Ifpart>
+      <p> Notes You add appear here</p>
+    </ng-template>
+    <ng-template #elsepart>
+      <div *ngFor="let notes of notesArray" class="display">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+              </mat-panel-title>
+              <mat-panel-description>
+                <strong>{{notes.text}}</strong>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="notes-content d-flex flex-column">
+              <div>{{notes.title}}</div>
+            </div>
+            <div class="d-flex justify-content-around ">
+              <button class="btn"  (click)="showDatePicker()" data-bs-toggle="modal"
+              data-bs-target="#exampleModal"> <mat-icon>timer</mat-icon></button>
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <input type="datetime-local" (change)="onDate($event)">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" (click)="createTimer(notes.noteId)">Send</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn"> <mat-icon>person_add</mat-icon></button>
+                <button class="btn"><mat-icon> insert_photo</mat-icon></button>
+                <button class="btn"><mat-icon>create</mat-icon></button>
+                <button class="btn"><mat-icon>cancel</mat-icon></button>
+              </div>
+              </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </ng-template>
+  </div>
+</div>
 </div>

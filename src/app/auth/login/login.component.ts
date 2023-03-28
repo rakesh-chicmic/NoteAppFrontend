@@ -41,7 +41,7 @@ throw new Error('Method not implemented.');
       console.log(response)
       if(response.isSuccess)
       {
-        this.route.navigate(['/main/notes']);
+        this.route.navigate(['/home']);
         this.service.registerToken(response.data['token']);
       }
     })
@@ -54,11 +54,11 @@ throw new Error('Method not implemented.');
 
   RegisterForm()
   {
-     this.route.navigateByUrl('auth/sign-in')
+     this.route.navigateByUrl('/sign-in')
   }
 
   mailSend()
   {
-    this.route.navigateByUrl('auth/forgot');
+    this.route.navigateByUrl('/forgot');
   }
 }

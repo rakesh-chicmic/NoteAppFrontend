@@ -7,8 +7,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion'; 
+import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule} from '@angular/material/datepicker'
+import { MatNativeDateModule} from '@angular/material/core';
+import { HomeComponent } from './home/home.component'
 
 const route : Routes = [
+  {
+    path : 'home' , component: HomeComponent
+  },
   {
     path : 'notes' , component: NotesComponent
   },
@@ -25,13 +34,19 @@ const route : Routes = [
     NotesComponent,
     TrashComponent,
     ArchiveComponent,
+    HomeComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     RouterModule.forChild(route),
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class MainModule { }

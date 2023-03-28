@@ -1,9 +1,6 @@
-<nav class="navbar navbar-dark bg-dark d-flex flex-row">
+<nav class="navbar navbar-dark bg-light d-flex flex-row">
     <div class="container-fluid">
-        <button (click)="showSidebar()"> <mat-icon>dehaze</mat-icon></button>
-        <!-- <button type="button" mat-button (click)="drawer.toggle()">
-          Toggle sidenav
-        </button> -->
+        <button class="btn" (click)="showSidebar()"> <mat-icon>dehaze</mat-icon></button>
     <div>
       <form class="d-flex input-group w-auto">
         <input
@@ -19,79 +16,28 @@
 
     </form>
 </div>
-<button (click)="logOut()"> <mat-icon>power_settings_new</mat-icon></button>
-<button (click)="changePass()"> change password</button>
-
-  <!-- <ul class="list-unstyled components">
-    <p>Dummy Heading</p>
-    <li class="active">
-        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-        <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li>
-                <a href="#">Home 1</a>
-            </li>
-            <li>
-                <a href="#">Home 2</a>
-            </li>
-            <li>
-                <a href="#">Home 3</a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="#">About</a>
-    </li>
-    <li>
-        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-        <ul class="collapse list-unstyled" id="pageSubmenu">
-            <li>
-                <a href="#">Page 1</a>
-            </li>
-            <li>
-                <a href="#">Page 2</a>
-            </li>
-            <li>
-                <a href="#">Page 3</a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="#">Portfolio</a>
-    </li>
-    <li>
-        <a href="#">Contact</a>
-    </li>
-</ul> -->
+<button class="btn" (click)="logOut()"> <mat-icon>power_settings_new</mat-icon></button>
+<button class="btn" (click)="changePass()"> change password</button>
+<button class="btn" (click)="showProfile()"> <mat-icon>person</mat-icon> </button>
 </div>
-<!-- <div>
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="close()"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div>
-        Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+</nav>
+
+
+<!-- <div class="modal modals fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="dropdown mt-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-          Dropdown button
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
-
-  </div> -->
-
-</nav>
-<!-- <mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-    <p>Auto-resizing sidenav</p>
-    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-  </mat-drawer>
-</mat-drawer-container> -->
+</div>
+ -->

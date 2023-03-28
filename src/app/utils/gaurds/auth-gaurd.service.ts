@@ -12,26 +12,26 @@ export class AuthGaurdService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot):boolean{
     const { routeConfig } = route;
     const { path } = routeConfig as Route;
-  if (path?.includes('main/notes')|| path?.includes('main/trash') || path?.includes('main/archieve') || path?.includes('auth/change') && !this.service.isLoggedIn()) {
+  if ( path?.includes('home')||path?.includes('notes')|| path?.includes('trash') || path?.includes('archieve') || path?.includes('change') && !this.service.isLoggedIn()) {
 
     return true;
   }
-  if ((path?.includes('auth/sign-in') || path?.includes('auth/login')) && !this.service.isLoggedIn()) {
+  if ((path?.includes('sign-in') || path?.includes('login')) && !this.service.isLoggedIn()) {
 
-    this.router.navigate(['main/notes']);
+    this.router.navigate(['notes']);
     return false;
   }
-  if ((path?.includes('auth/sign-in') || path?.includes('auth/login')) && this.service.isLoggedIn()) {
+  if ((path?.includes('sign-in') || path?.includes('login')) && this.service.isLoggedIn()) {
 
     return true;
 
   }
 
-  if (path?.includes('main/notes') && !this.service.isLoggedIn()) {
-    this.router.navigate(['auth/login']);
+  if (path?.includes('notes') && !this.service.isLoggedIn()) {
+    this.router.navigate(['/login']);
     return false;
   }
-  this.router.navigateByUrl('/auth/login')
+  this.router.navigateByUrl('/login')
   return false;
 }
   

@@ -35,8 +35,8 @@ export class SignUpComponent {
       this.client.signUpUser(this.registrationForm.value).subscribe((response :any)=>{
         if(response.isSuccess)
         {
-          this.route.navigate(['/main/notes']);
-          this.client.registerToken(response.data['token']);
+          this.route.navigate(['notes']);
+           this.client.registerToken(response.data['token']);
         }
       })
   } else{

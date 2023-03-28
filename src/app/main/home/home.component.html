@@ -1,0 +1,20 @@
+<div>
+    <app-navbar></app-navbar>
+</div>
+<div class="sidebar">
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+        id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="margin-top: 60px;">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                (click)="close()"></button>
+        </div>
+        <div class="offcanvas-body">
+            <button class="btn"></button>
+            <button class="btn"></button>
+            <button class="btn"><mat-icon>backup</mat-icon>Trash</button>
+            <button class="btn"><mat-icon>delete</mat-icon></button>
+        </div>
+    </div>
+</div>
+<app-notes></app-notes>

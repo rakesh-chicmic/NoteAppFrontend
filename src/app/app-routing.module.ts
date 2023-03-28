@@ -9,10 +9,10 @@ const routes: Routes = [
     path:'' ,redirectTo:'auth/login', pathMatch:'full'
   },
   {
-    path:'auth' , loadChildren :() => import('./auth/auth.module').then((m)=>m.AuthModule),
+    path:'auth' , loadChildren :() => import('./auth/auth.module').then((m)=>m.AuthModule), canActivate :[AuthGaurdService]
   },
   {
-    path : 'main' , loadChildren :()=> import('./main/main.module').then((m)=>m.MainModule),
+    path : 'main' , loadChildren :()=> import('./main/main.module').then((m)=>m.MainModule),canActivate :[AuthGaurdService]
   }
 ];
 
