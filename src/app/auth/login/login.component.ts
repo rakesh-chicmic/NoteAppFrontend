@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from 'src/app/service/register.service';
 import { REGEX } from 'src/app/utils/constant';
 
@@ -18,7 +19,7 @@ throw new Error('Method not implemented.');
   loginForm : FormGroup;
   message :string ='';
   messageShow :boolean = false;
-  constructor( private service : RegisterService ,private route : Router ,private fb : FormBuilder) {
+  constructor( private service : RegisterService ,private route : Router ,private fb : FormBuilder , private toaster : ToastrService) {
 
   this.loginForm = this.fb.group({
       email :['',Validators.compose([Validators.required , Validators.pattern(REGEX.EMAIL)])],
@@ -41,8 +42,22 @@ throw new Error('Method not implemented.');
       console.log(response)
       if(response.isSuccess)
       {
-        this.route.navigate(['/home']);
         this.service.registerToken(response.data['token']);
+        this.route.navigate(['/home']);
+        this.toaster.success('Login Successfully', 'Sucesss',
+          {
+            titleClass: "center",
+            messageClass: "center"
+          })
+      }
+
+      else
+      {
+        this.toaster.error(response.message ,'Major Error', {
+          titleClass: "center",
+            messageClass: "center",
+         toastClass : 'toast-container' 
+        });
       }
     })
   }

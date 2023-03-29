@@ -7,12 +7,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion'; 
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule} from '@angular/material/datepicker'
 import { MatNativeDateModule} from '@angular/material/core';
 import { HomeComponent } from './home/home.component'
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const route : Routes = [
   {
@@ -46,7 +47,9 @@ const route : Routes = [
     MatExpansionModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSidenavModule,
+    FormsModule,
   ]
 })
 export class MainModule { }

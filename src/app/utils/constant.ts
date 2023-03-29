@@ -24,10 +24,10 @@ export const REGEX = {
      logout :'Login/logOut',
      user :'User',
      profile : 'User/profile',
-     IP : "http://192.180.2.128:5050/" ,
+     IP : "http://192.180.0.127:4041/" ,
      profilePic : "File/Profileimage",
      update : 'User/UpdateProfile',
-     reset : ""
+     fileUpload : "File/FileUpload"
    },
 
    value :

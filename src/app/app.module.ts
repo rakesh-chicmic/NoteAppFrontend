@@ -12,7 +12,9 @@ import { MatInputModule }  from "@angular/material/input"
 import {  MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from './shared/shared.module';
-import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { MatSidenavModule } from '@angular/material/sidenav'
     MatFormFieldModule,
     MatIconModule,
     MatSidenavModule,
-    SharedModule
+    SharedModule,
+    ToastrModule.forRoot({ timeOut: 10000,
+      positionClass: 'toast-top-center', }),
   ],
   providers: [],
   bootstrap: [AppComponent]

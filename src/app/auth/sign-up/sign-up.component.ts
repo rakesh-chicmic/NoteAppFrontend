@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from 'src/app/service/register.service';
 import { REGEX } from 'src/app/utils/constant';
 
@@ -17,7 +18,7 @@ export class SignUpComponent {
   validateDateOfbirth: boolean =false;
   btnclick: boolean =false ;
   registrationForm:FormGroup;
-  constructor( private route : Router , private fb:FormBuilder , private client : RegisterService){
+  constructor( private route : Router , private fb:FormBuilder , private client : RegisterService , private toaster : ToastrService ){
       this.registrationForm = this.fb.group({
           firstName:['',Validators.required],
           lastName:['',Validators.required],
@@ -35,8 +36,13 @@ export class SignUpComponent {
       this.client.signUpUser(this.registrationForm.value).subscribe((response :any)=>{
         if(response.isSuccess)
         {
-          this.route.navigate(['notes']);
+          this.route.navigate(['/home']);
            this.client.registerToken(response.data['token']);
+           this.toaster.success('User Registered Successfully', 'Sucesss')
+        }
+
+        else{
+          this.toaster.error(response.message)
         }
       })
   } else{

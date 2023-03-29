@@ -8,6 +8,10 @@ import { SocketConnectionService } from 'src/app/service/socket-connection.servi
 })
 export class HomeComponent implements OnInit , OnDestroy {
 
+  events: string[] = [];
+  opened: boolean =false;
+  Showbutton : Array<string> = [ 'trash' , 'notes' , 'archieve' ]
+  selectedVal :string ='';
   constructor(private socketConnection : SocketConnectionService){}
   ngOnInit(): void {
     this.socketConnection.startConnection();
@@ -20,5 +24,11 @@ export class HomeComponent implements OnInit , OnDestroy {
 
   ngOnDestroy(): void {
     this.socketConnection._hubConnection?.off("recieveMessage")
+  }
+
+  showComponent(event: any)
+  {
+     console.log(event.target.value)
+     this.selectedVal=event.target.value;
   }
 }
