@@ -27,11 +27,11 @@ export class CommonHttpService {
 
   httpPut(url: string , data : any)
   {
-    return this.http.get(`${baseUrl}${url}` ,data)
+    return this.http.put(`${baseUrl}${url}` ,data)
   }
 
   httpDelete( url : string)
   {
-    return this.http.get(`${baseUrl}${url}` )
+    return this.http.delete(`${baseUrl}${url}` )
   }
 }

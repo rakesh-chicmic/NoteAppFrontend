@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from 'src/app/service/register.service';
 import { REGEX } from 'src/app/utils/constant';
 
@@ -16,7 +17,7 @@ export class ResetPasswordComponent implements OnInit {
   confirmPasswordClass = 'form-control'
   showPassword: boolean = true;
   resetPasswordForm : FormGroup ; 
-  constructor(private service : RegisterService ,private activeRoute : ActivatedRoute,private route : Router , private fb : FormBuilder){
+  constructor(private service : RegisterService ,private activeRoute : ActivatedRoute,private route : Router , private fb : FormBuilder , private toaster : ToastrService){
     this.resetPasswordForm = this.fb.group({
       password :['',Validators.compose([Validators.required , Validators.pattern(REGEX.PASSWORD)])],
       confirmPassword : ['' ,Validators.compose([Validators.required, Validators.pattern(REGEX.PASSWORD)])]
@@ -53,7 +54,23 @@ resetPass()
 
       if(response.isSuccess)
       {
+
+        this.toaster.success('Password Changed Successfully', 'Sucesss',
+          {
+            titleClass: "center",
+            messageClass: "center"
+          })
+        localStorage.clear();
         this.route.navigate(['/login']);
+      }
+
+      else
+      {
+        this.toaster.warning('Please enter same Password ', 'Alert',
+        {
+          titleClass: "center",
+          messageClass: "center"
+        })
       }
     })
   }

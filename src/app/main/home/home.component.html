@@ -1,10 +1,23 @@
 <div>
     <app-navbar></app-navbar>
+    <div class="card" style="width: 18rem;" *ngIf="showRemainderNote">
+
+        <h1>Note </h1>
+        <div *ngFor=" let note of remainderNote">
+    
+     
+                      <img [src]=note.image alt="" srcset="" style=" width: 100px; height: 100px;">
+        <div class="card-body">
+          <h5 class="card-title">{{note.title}}</h5>
+          <p class="card-text">{{note.text}}</p>
+        </div>
+    </div>
+      </div>
 </div>
 <div class="main-content">
 <div class="sidebar">
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-        id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" move="side" style="margin-top: 60px; width: 200px; position: absolute;">
+        id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" move="side" style="margin-top: 60px; width: 200px; position: absolute; ">
         <div class="offcanvas-header">
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
                 (click)="close()"></button>
@@ -23,4 +36,3 @@
     <div *ngSwitchDefault ><app-notes></app-notes></div>
 </div>
 </div>
-

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from 'src/app/service/register.service';
 import { REGEX } from 'src/app/utils/constant';
 
@@ -14,7 +15,7 @@ export class ChangePasswordComponent {
   message:string ='';
   messageShow=false;
   changePasswordform : FormGroup;
-  constructor(private client : RegisterService,private route : Router, private fb : FormBuilder){
+  constructor(private client : RegisterService,private route : Router, private fb : FormBuilder , private toaster : ToastrService){
     this.changePasswordform = this.fb.group({
     oldPassword:['' , Validators.compose([Validators.required])],
     newPassword: ['' , Validators.compose([Validators.required , Validators.pattern(REGEX.PASSWORD)])],
@@ -30,18 +31,40 @@ export class ChangePasswordComponent {
     { 
       if(this.changePasswordform.valid)
       {
+        if(data.value.newPassword === data.value.confirmPassword)
+        {
        this.client.changePassword(data.value['oldPassword'],data.value['newPassword']).subscribe((value :any)=>{
         console.log(value)
         this.messageShow =true;
         if(value.statusCode =="200")
          {
-         this. message = "PasswordChanged";
-         alert(this.message);
+          this.toaster.success('Password Changed Successfully', 'Sucesss',
+          {
+            titleClass: "center",
+            messageClass: "center"
+          })
 
-         this.route.navigateByUrl('/login')
+         this.route.navigateByUrl('/home')
+         }
+
+         else
+         {
+          this.toaster.error(value.message , 'Error',{
+            titleClass: "center",
+            messageClass: "center"
+          })
          }
 
         })
+      }
+
+      else{
+        this.toaster.warning('Please enter same Password ', 'Alert',
+        {
+          titleClass: "center",
+          messageClass: "center"
+        })
+      }
        }
     else
     {

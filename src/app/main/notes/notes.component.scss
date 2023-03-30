@@ -159,7 +159,7 @@ margin-top: 2rem;
 .notes-content
 {
   width: 280px;
-  height: 100px;
+  height: 200px;
   border-radius: 20px solid black;
 }
 
@@ -168,9 +168,10 @@ margin-top: 2rem;
   width: 600px;
   height: 50px;
   margin: auto;
-  padding-top: 70px;
-  padding-bottom: 100px;
+  padding-top: 10px;
+  padding-bottom: 250px;
 }
+
 .showNote
 {
   width: 800px;
@@ -188,7 +189,8 @@ margin-top: 2rem;
 .container
 {
   width: 1400px;
-  height: 800px ;
+  height: 800px;
+  margin-left: 0px;
 }
 .sidebar
 {
@@ -200,4 +202,25 @@ margin-top: 2rem;
 {
   border: none;
   
+}
+
+.bdrop {
+  background-color: #bbbbbbf2;
+  backdrop-filter: blur(4px);
+}
+
+.blur {
+  background: rgba(255, 255, 255, 0.2); // Make sure this color has an opacity of less than 1
+  backdrop-filter: blur(8px); // This be the blur
+  height: 100vh;
+	width: 50%;
+}
+
+.multiple-filters {
+  backdrop-filter: blur(20px) saturate(120%) contrast(200%);
+}
+
+.footer
+{
+  justify-self:baseline;
 }

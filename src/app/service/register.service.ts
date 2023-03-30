@@ -27,7 +27,7 @@ export class RegisterService {
   }
 
   changePassword(oldPassword: string, newPassword: string) {
-    return this.client.httpPost(Constant.Url.resetPassword, { oldPassword, newPassword })
+    return this.client.httpPut(Constant.Url.changePassword, { oldPassword, newPassword })
   }
 
   registerToken(value: string) {

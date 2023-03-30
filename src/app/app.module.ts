@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from './shared/shared.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ToastrModule } from 'ngx-toastr';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { ToastrModule } from 'ngx-toastr';
     SharedModule,
     ToastrModule.forRoot({ timeOut: 10000,
       positionClass: 'toast-top-center', }),
+      PickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

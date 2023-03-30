@@ -14,6 +14,7 @@ import { MatDatepickerModule} from '@angular/material/datepicker'
 import { MatNativeDateModule} from '@angular/material/core';
 import { HomeComponent } from './home/home.component'
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 const route : Routes = [
   {
@@ -50,6 +51,7 @@ const route : Routes = [
     MatNativeDateModule,
     MatSidenavModule,
     FormsModule,
+    PickerModule
   ]
 })
 export class MainModule { }

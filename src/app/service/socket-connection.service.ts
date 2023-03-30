@@ -15,6 +15,10 @@ export class SocketConnectionService {
 
   responseNoteModel = new Subject;
   allNotes = new Subject;
+  pinnedNotes = new Subject;
+  alarmTriggeredSubject = new Subject;
+  shareNoteSubject = new Subject;
+  EditNote = new Subject;
 
   public startConnection()
   {
@@ -27,12 +31,36 @@ export class SocketConnectionService {
 
       }).withAutomaticReconnect().build();
 
-      this._hubConnection.start().then(()=>{
+      
+       this._hubConnection.start().then(()=>{
           console.log("Connection started ");
-        this.getNotes();
+
+          this.getNotes();
+          this.alarmTriggered()
+          this.getPinnedNotes();
       }).catch((error: any)=>{
           console.log(" Error While starting connection "+error);
       });
+
+
+      // this._hubConnection = new signalR.HubConnectionBuilder().withUrl("http://192.180.2.128.4242/blogHub",
+      // { 
+      //     skipNegotiation: true,
+      //      transport: signalR.HttpTransportType.WebSockets,
+      //      accessTokenFactory :()=> authToken
+
+      // }).withAutomaticReconnect().build();
+
+      
+      //  this._hubConnection.start().then(()=>{
+      //     console.log("Connection started ");
+
+      //     this.getNotes();
+      //     this.alarmTriggered()
+      //     this.getPinnedNotes();
+      // }).catch((error: any)=>{
+      //     console.log(" Error While starting connection "+error);
+      // });
   }
 
   addNote(note : any)
@@ -64,9 +92,9 @@ export class SocketConnectionService {
     })
   }
 
-  trashNote(id : string)
+  trashNote(id : string , IsTrashed : boolean)
   {
-      this._hubConnection.invoke("DeleteNote",id).then((response : any)=>{
+      this._hubConnection.invoke("TrashNote",id , IsTrashed).then((response : any)=>{
         console.log(response);
       })
       this.getNotes();
@@ -79,9 +107,9 @@ export class SocketConnectionService {
      })
   }
 
-  archieveNote(id : string)
+  archieveNote(id : string , IsArchived : boolean)
   {
-      this._hubConnection.invoke("ArchiveNote",id).then((response : any)=>{
+      this._hubConnection.invoke("ArchiveNote",id ,IsArchived).then((response : any)=>{
         console.log(response);
       })
       this.getNotes();
@@ -104,8 +132,43 @@ export class SocketConnectionService {
 
   getPinnedNotes()    
   {
-    return this._hubConnection.invoke('GetPinnedNotes').catch((error:Error)=>{
+    return this._hubConnection.invoke('GetPinnedNotes').then((response :any)=>{
+      this.pinnedNotes.next(response.data);
+      console.log(response)
+    }).catch((error:Error)=>{
       console.log(error)
+    })
+  }
+
+  alarmTriggered()
+  {
+     this._hubConnection.on('alarmTriggered',(response:any)=>{
+      this.alarmTriggeredSubject.next(response)
+        console.log(response)
+      })
+  }
+
+  deleteNotePermanantly(id : string)
+  {
+    return this._hubConnection.invoke('DeleteNote',id ).catch((error:Error)=>{
+      console.log(error);
+    });
+  }
+
+  shareNote(id:string , ReceiverEmail : string)
+  {
+    this._hubConnection.invoke('ShareNote',id, ReceiverEmail).then((response :any)=>{
+      this.shareNoteSubject.next(response)
+      console.log(response);
+    })
+
+    this.getNotes()
+  }
+
+  editNote( Editeddata : any)
+  {
+    return this._hubConnection.invoke('EditNote',Editeddata).then((response:any)=>{
+      console.log(response);
     })
   }
 }

@@ -32,7 +32,16 @@ export const REGEX = {
 
    value :
    {
-     pageNo : 1
-   }
+     pin : 1,
+     unpin : 0,
+     True : true,
+     False : false
+   },
+
+    Upload :
+    {
+       message : 1,
+       image : 2
+    }
 }
   

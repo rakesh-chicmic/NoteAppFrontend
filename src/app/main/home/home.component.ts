@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { SocketConnectionService } from 'src/app/service/socket-connection.service';
 
 @Component({
@@ -12,9 +13,28 @@ export class HomeComponent implements OnInit , OnDestroy {
   opened: boolean =false;
   Showbutton : Array<string> = [ 'trash' , 'notes' , 'archieve' ]
   selectedVal :string ='';
-  constructor(private socketConnection : SocketConnectionService){}
-  ngOnInit(): void {
+  remainderNote : any =[]
+  showRemainderNote = false
+  constructor(private socketConnection : SocketConnectionService , private toaster : ToastrService){
     this.socketConnection.startConnection();
+    this.socketConnection.alarmTriggeredSubject.subscribe((response : any)=>{
+      if(response.isSuccess)
+      {
+       this.remainderNote.push(response.data)
+         this.toaster.warning("You Have a Note Remainder ","Remainder",{
+            titleClass: "center",
+            messageClass: "center"
+
+         })
+
+         setTimeout(() => {
+           this.showRemainderNote = true
+         }, 5000);
+      }
+    })
+  }
+    ngOnInit() {
+      
   }
 
   close() {

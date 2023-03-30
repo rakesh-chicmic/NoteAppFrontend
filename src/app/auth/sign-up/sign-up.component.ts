@@ -38,11 +38,18 @@ export class SignUpComponent {
         {
           this.route.navigate(['/home']);
            this.client.registerToken(response.data['token']);
-           this.toaster.success('User Registered Successfully', 'Sucesss')
+           this.toaster.success('User Registered  Successfully', 'Sucesss',
+           {
+             titleClass: "center",
+             messageClass: "center"
+           })
         }
 
         else{
-          this.toaster.error(response.message)
+          this.toaster.error(response.message , 'Error',{
+            titleClass: "center",
+            messageClass: "center"
+          })
         }
       })
   } else{

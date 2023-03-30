@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from 'src/app/service/register.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { RegisterService } from 'src/app/service/register.service';
   styleUrls: ['./forget-password.component.scss']
 })
 export class ForgetPasswordComponent {
-  constructor( private route :Router , private client :RegisterService) {}
+  constructor( private route :Router , private client :RegisterService , private toaster : ToastrService) {}
     message:string='';
     messageShow:boolean=false;
 
@@ -20,17 +21,23 @@ export class ForgetPasswordComponent {
         this.client.forgotPassword("192.180.2.133:4200/reset",data.value.email).subscribe((result:any)=>{
             console.log(result);
             this.messageShow = true;
-            if(result.message=='success')
+            if(result.statusCode===200)
             {
-            this.message=" Mail is sent to your mail Id  ";
+              this.toaster.success('Mail Sent Successfully ', 'Sucesss',
+              {
+                titleClass: "center",
+                messageClass: "center"
+              })
+              this.route.navigateByUrl('/login');
             }
 
-            else
-            {
-               this.message = result.message;
+            else{
+              this.toaster.error(result.message , 'Error',{
+                titleClass: "center",
+                messageClass: "center"
+              })
             }
         })
         //this.modalRef.close()
-        this.route.navigateByUrl('/login');
     }
 }
