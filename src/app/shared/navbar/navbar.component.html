@@ -11,33 +11,38 @@
           aria-describedby="search-addon"
         />
         <span class="input-group-text text-white border-0" id="search-addon">
-          <i class="fas fa-search"></i>
+          <mat-icon>searchx</mat-icon>
         </span>
 
     </form>
 </div>
 <button class="btn" (click)="logOut()"> <mat-icon>power_settings_new</mat-icon></button>
 <button class="btn" (click)="changePass()"> change password</button>
-<button class="btn" (click)="showProfile()"> <mat-icon>person</mat-icon> </button>
+<button class="btn" (click)="showProfile()"  [cModalToggle]="staticBackdropModal.id"> <mat-icon>person</mat-icon> </button>
 </div>
 </nav>
 
 
-<!-- <div class="modal modals fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+
+<c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal">
+  <c-modal-header>
+    <h5 cModalTitle>Profile</h5>
+    <button [cModalToggle]="staticBackdropModal.id" button>Close</button>
+  </c-modal-header>
+  <c-modal-body>
+    <div class="d-flex flex-column">
+    <div class="align-self-center">
+    <img src="\assets\images (5).jpg" alt="" srcset="" style="width: inherit; height: 100px; border-radius: 50%;">
+  </div>
+    <div>
+      <button class="btn" (click)="UploadProfilePhoto()"><mat-icon> insert_photo</mat-icon></button>
     </div>
   </div>
-</div>
- -->
+  </c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="staticBackdropModal.id" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary">Understood</button>
+  </c-modal-footer>
+</c-modal>

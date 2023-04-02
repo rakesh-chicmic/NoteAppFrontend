@@ -14,6 +14,8 @@ import { Constant } from 'src/app/utils/constant';
 })
 export class NotesComponent implements OnInit {
 
+
+  visible = false;
   @ViewChild(MatAccordion) accordion: MatAccordion | undefined;
   notes: string = '';
   notesForm: FormGroup;
@@ -41,39 +43,47 @@ export class NotesComponent implements OnInit {
       title: [''],
       notesMessage: ['', Validators.compose([Validators.required])]
     })
-
+    
     this.socketConnection.getPinnedNotes()
     this.socketConnection.pinnedNotes.subscribe((response) => {
       this.PinnedArray = response;
     })
   }
   ngOnInit(): void {
+    this.loadData();
 
   }
 
   @HostListener('document:click')
   clickInside() {
-    if (this.notesForm.valid) {
+    
+    
+    if (this.notesForm.valid) 
+    {
+      console.log(this.notesForm.value)
+  
+      this.notesArray.push(this.notesForm.value)
 
-      let Title: string = this.notesForm.value.title;
-      let Message = this.notesForm.value.notesMessage;
-      let URL: string = 'abc'
-      let MessageType: number = Constant.Upload.message;
-      this.clickCount++;
-      if (this.clickCount === 1) {
-        this.socketConnection.addNote({ Title, Message, MessageType, URL })
-        this.socketConnection.responseNoteModel.subscribe((response) => {
-          console.log(response);
-          this.notesArray.push(response)
-          console.log(this.notesArray)
-        })
-      }
-      else {
-        setTimeout(() => {
-          this.clickCount = 0;
-        }, 1000);
-        return;
-      }
+      
+      // let Title: string = this.notesForm.value.title;
+      // let Message = this.notesForm.value.notesMessage;
+      // let URL: string = 'abc'
+      // let MessageType: number = Constant.Upload.message;
+      // this.clickCount++;
+      // if (this.clickCount === 1) {
+      //   this.socketConnection.addNote({ Title, Message, MessageType, URL })
+      //   this.socketConnection.responseNoteModel.subscribe((response) => {
+      //     console.log(response);
+      //     this.notesArray.push(response)
+      //     console.log(this.notesArray)
+      //   })
+      // }
+      // else {
+      //   setTimeout(() => {
+      //     this.clickCount = 0;
+      //   }, 1000);
+      //   return;
+      // }
 
     }
     this.notesForm.reset();
@@ -292,5 +302,20 @@ export class NotesComponent implements OnInit {
       this.notesArray = response
     })
     })
+  }
+
+  loadData()
+  {
+    for ( let note of this.notesArray)
+    {
+      this.EditNoteForm.patchValue({
+        title : note.title,
+        notesMessage : note.text
+      })
+    }
+  }
+
+  toggleCollapse() {
+    this.visible = !this.visible;
   }
   }

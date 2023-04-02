@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotesComponent } from './notes/notes.component';
 import { TrashComponent } from './trash/trash.component';
@@ -15,6 +15,8 @@ import { MatNativeDateModule} from '@angular/material/core';
 import { HomeComponent } from './home/home.component'
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import {MatCardModule} from '@angular/material/card';
+import { CollapseModule } from '@coreui/angular';
 
 const route : Routes = [
   {
@@ -51,7 +53,12 @@ const route : Routes = [
     MatNativeDateModule,
     MatSidenavModule,
     FormsModule,
-    PickerModule
+    PickerModule,
+    MatCardModule,
+    CollapseModule
   ]
+
+,
+schemas :[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MainModule { }

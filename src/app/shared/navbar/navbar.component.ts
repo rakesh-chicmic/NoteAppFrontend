@@ -37,4 +37,9 @@ showProfile()
   // let div = document.getElementsByClassName('modals')[0];
   // div.classList.add('show');
 }
+
+UploadProfilePhoto()
+{
+  
+}
 }

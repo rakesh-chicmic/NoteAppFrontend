@@ -6,9 +6,9 @@
                   <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="email">
                   <label for="floatingInput">Email address <span class="text-danger"> *</span></label>
                 </div>
-                <div *ngIf="loginForm.controls['email'].touched &&  loginForm.controls['email'].hasError('required') || loginForm.controls['email'].hasError('pattern')" class="alert alert-danger" >
+                <small *ngIf="loginForm.controls['email'].touched &&  loginForm.controls['email'].hasError('required') || loginForm.controls['email'].hasError('pattern')" class="alert alert-danger" >
                   Please enter a Valid Email
-                </div>
+                </small>
                 <div class="form-floating inputBox input-pass">
                   <input  matInput [type]="showPassword ? 'password' : 'text'" class="form-control" id="floatingPassword" placeholder="Password" formControlName="password">
                   <mat-icon matSuffix (click)="togglePasswordVisibility()">
@@ -24,9 +24,6 @@
                   <button type="button" class="btn"  style="border: none; color: blue;"  (click)="showModal()">forgotPassword?</button>
                 </div>
   
-              <div class="alert alert-danger" *ngIf="messageShow" role="alert">
-                {{message}}
-              </div>
                 <div class="submit_button">
                   <button type="submit" class="btn btn-primary" >Submit</button>
                 </div>
