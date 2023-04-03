@@ -17,19 +17,22 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import {MatCardModule} from '@angular/material/card';
 import { CollapseModule } from '@coreui/angular';
+import { AuthGaurdService } from '../utils/gaurds/auth-gaurd.service';
+import { ModalModule } from '@coreui/angular';
+import { SharedComponent } from './shared/shared.component';
 
 const route : Routes = [
   {
-    path : 'home' , component: HomeComponent
+    path : 'home' , component: HomeComponent ,canActivate :[AuthGaurdService]
   },
   {
-    path : 'notes' , component: NotesComponent
+    path : 'notes' , component: NotesComponent ,canActivate :[AuthGaurdService]
   },
   {
-    path : 'trash' , component: TrashComponent
+    path : 'trash' , component: TrashComponent ,canActivate :[AuthGaurdService]
   },
   {
-    path : 'archieve' , component: ArchiveComponent
+    path : 'archieve' , component: ArchiveComponent ,canActivate :[AuthGaurdService]
   }
 ]
 
@@ -39,6 +42,7 @@ const route : Routes = [
     TrashComponent,
     ArchiveComponent,
     HomeComponent,
+    SharedComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +59,8 @@ const route : Routes = [
     FormsModule,
     PickerModule,
     MatCardModule,
-    CollapseModule
+    CollapseModule,
+    ModalModule
   ]
 
 ,

@@ -12,19 +12,19 @@ import { AuthGaurdService } from '../utils/gaurds/auth-gaurd.service';
 
 const route : Routes = [
   {
-    path : 'sign-in' , component: SignUpComponent 
+    path : 'sign-in' , component: SignUpComponent ,canActivate :[AuthGaurdService]
   },
   {
-    path : 'login' , component: LoginComponent 
+    path : 'login' , component: LoginComponent ,canActivate :[AuthGaurdService]
   },
   {
     path : 'forgot' , component: ForgetPasswordComponent 
   },
   {
-    path : 'reset' , component: ResetPasswordComponent
+    path : 'reset' , component: ResetPasswordComponent ,canActivate :[AuthGaurdService]
   },
   {
-    path : 'change' , component: ChangePasswordComponent 
+    path : 'change' , component: ChangePasswordComponent ,canActivate :[AuthGaurdService]
   }
 ]
 @NgModule({

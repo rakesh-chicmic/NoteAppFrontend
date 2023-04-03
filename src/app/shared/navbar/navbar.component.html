@@ -18,7 +18,7 @@
 </div>
 <button class="btn" (click)="logOut()"> <mat-icon>power_settings_new</mat-icon></button>
 <button class="btn" (click)="changePass()"> change password</button>
-<button class="btn" (click)="showProfile()"  [cModalToggle]="staticBackdropModal.id"> <mat-icon>person</mat-icon> </button>
+<button class="btn"  [cModalToggle]="staticBackdropModal.id"> <mat-icon>person</mat-icon> </button>
 </div>
 </nav>
 
@@ -32,10 +32,16 @@
   <c-modal-body>
     <div class="d-flex flex-column">
     <div class="align-self-center">
-    <img src="\assets\images (5).jpg" alt="" srcset="" style="width: inherit; height: 100px; border-radius: 50%;">
+    <img [src]=imagePath  alt="" srcset="" style="width: inherit; height: 100px; border-radius: 50%;">
+    <input type="file" hidden id="img" #img accept="image/*" (change)="UploadProfilePhoto($event)">
+    <button class="btn" (click)="img.click()"><mat-icon> insert_photo</mat-icon></button>
   </div>
-    <div>
-      <button class="btn" (click)="UploadProfilePhoto()"><mat-icon> insert_photo</mat-icon></button>
+    <div class="align-self-center">
+      <div *ngFor=" let user of UserDeatils">
+        <p>
+          {{user.firstName}}
+        </p>
+      </div>
     </div>
   </div>
   </c-modal-body>
@@ -43,6 +49,6 @@
     <button [cModalToggle]="staticBackdropModal.id" cButton color="secondary">
       Close
     </button>
-    <button cButton color="primary">Understood</button>
+    <!-- <button cButton color="primary">Understood</button> -->
   </c-modal-footer>
 </c-modal>

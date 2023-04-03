@@ -3,32 +3,35 @@
 <div class="showNotes">
     <div>
       <div class="d-flex flex-row flex-wrap" style=" width: 100%; height: 100%; margin-top: 100px;">
-      <div *ngFor="let notes of trashArray" class="display">
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-              </mat-panel-title>
-              <mat-panel-description>
-                <strong>{{notes.text}}</strong>
-                <div *ngIf="notes.isReminder"> <p>Remainder Added <mat-icon>timer</mat-icon> </p></div>
+      <div *ngFor="let notes of trashArray ; let i=index" class="display">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title><input type="text"   class="showValue" [value]=notes.title  placeholder="Title ...." disabled></mat-card-title>
+            <mat-card-subtitle><input type="text" name="" id=""  [value]=notes.text  class="showValue"  placeholder="Text.." disabled></mat-card-subtitle>
+          </mat-card-header>
+          <div *ngIf="notes.messageType === MessageType">
+          <img  mat-card-image [src]=notes.images >
+         </div>
+          <mat-card-content>
+            <div *ngIf="notes.isReminder"> <p>Remainder Added <mat-icon>timer</mat-icon> </p></div>
                 <div *ngIf="notes.isShared"> <p>Shared Added <mat-icon>person_add</mat-icon> </p></div>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div class="notes-content d-flex flex-column">
-              <div>{{notes.title}}</div>
-              <div *ngIf="(notes.messageType===2)" >
-                <img [src]=notes.images alt="" srcset="" style=" width: 50px; height: 50px;">
-              </div>
-              <div class="d-flex flex-wrap ">
-                <button class="btn" (click)="delete(notes.noteId)"><mat-icon>delete_forever</mat-icon></button>
-                <button class="btn" (click)="restrore(notes.noteId)"><mat-icon>restore_from_trash</mat-icon> </button>
-              </div>
+            <div [visible]="notes.isVisible" cCollapse #card="cCollapse">
+              <c-card class="mt-3 shadow">
+                <c-card-body>
+                  <div class="footer d-flex flex-wrap ">
+                    <button class="btn" title="delete" (click)="delete(notes.noteId)"><mat-icon>delete_forever</mat-icon></button>
+                    <button class="btn" title="restrore" (click)="restrore(notes.noteId)"><mat-icon>restore_from_trash</mat-icon> </button>
+                  </div>
+                </c-card-body>
+              </c-card>
             </div>
-          </mat-expansion-panel>
-        </mat-accordion>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="toggleCollapse(i)">Options</button>
+          </mat-card-actions>
+        </mat-card>
       </div>
     </div>
-    </div>
   </div>
+</div>
 </div>

@@ -9,6 +9,19 @@ import { Constant } from 'src/app/utils/constant';
   styleUrls: ['./trash.component.scss']
 })
 export class TrashComponent {
+visible: boolean = false;
+
+MessageType = Constant.Upload.image;
+toggleCollapse(id:number) {
+  if(this.trashArray[id].isVisible)
+  {
+    this.trashArray[id].isVisible=false;
+  }
+  else
+  {
+    this.trashArray[id].isVisible=true;
+  }
+}
 
   trashArray : any =[]
   constructor( private socketConnection : SocketConnectionService , private toaster : ToastrService  ){

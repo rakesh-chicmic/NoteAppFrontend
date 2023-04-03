@@ -9,9 +9,21 @@ import { Constant } from 'src/app/utils/constant';
   styleUrls: ['./archive.component.scss']
 })
 export class ArchiveComponent {
+  visible: boolean=false;
+toggleCollapse(id:number) {
+  if(this.archieveArray[id].isVisible)
+  {
+    this.archieveArray[id].isVisible=false;
+  }
+  else
+  {
+    this.archieveArray[id].isVisible=true;
+  }
+}
 
   MessageType = Constant.Upload.image
   archieveArray : any =[]
+
   constructor(private socketConnection : SocketConnectionService , private toaster : ToastrService){
     this.socketConnection.getarchieveNotes().then((response:any)=>{
       console.log(response);

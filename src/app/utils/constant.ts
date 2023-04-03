@@ -22,12 +22,13 @@ export const REGEX = {
      resetPassword :'Password/ResetPassword',
      sendMail :'Password/ForgetPassword',
      logout :'Login/logOut',
-     user :'User',
-     profile : 'User/profile',
+     user :'User/GetUser',
+     profile : 'User/UpdateProfile',
      IP : "http://192.180.0.127:4041/" ,
-     profilePic : "File/Profileimage",
+     profilePic : "User/ImageUpload",
      update : 'User/UpdateProfile',
      fileUpload : "File/FileUpload"
+
    },
 
    value :
@@ -42,6 +43,9 @@ export const REGEX = {
     {
        message : 1,
        image : 2
-    }
+    },
+
+    ButtonArray :  ['trash' , 'notes' , 'archieve' ,'shared']
+    
 }
   

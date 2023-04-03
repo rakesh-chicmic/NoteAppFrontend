@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { SocketConnectionService } from 'src/app/service/socket-connection.service';
+import { Constant } from 'src/app/utils/constant';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +12,8 @@ export class HomeComponent implements OnInit , OnDestroy {
 
   events: string[] = [];
   opened: boolean =false;
-  Showbutton : Array<string> = [ 'trash' , 'notes' , 'archieve' ]
-  selectedVal :string ='';
+  Showbutton : Array<string> = Constant.ButtonArray;
+  selectedValOfButton :string ='';
   remainderNote : any =[]
   showRemainderNote = false
   constructor(private socketConnection : SocketConnectionService , private toaster : ToastrService){
@@ -49,6 +50,6 @@ export class HomeComponent implements OnInit , OnDestroy {
   showComponent(event: any)
   {
      console.log(event.target.value)
-     this.selectedVal=event.target.value;
+     this.selectedValOfButton=event.target.value;
   }
 }

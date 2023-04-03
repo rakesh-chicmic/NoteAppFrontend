@@ -8,17 +8,18 @@ const authToken :any  = localStorage.getItem("token");
   providedIn: 'root'
 })
 export class SocketConnectionService {
-
+  
   constructor() { }
-
+  
   public _hubConnection : signalR.HubConnection | any;
-
+  
   responseNoteModel = new Subject;
   allNotes = new Subject;
   pinnedNotes = new Subject;
   alarmTriggeredSubject = new Subject;
   shareNoteSubject = new Subject;
   EditNote = new Subject;
+  sharedNotes = new Subject;
 
   public startConnection()
   {
@@ -42,31 +43,12 @@ export class SocketConnectionService {
           console.log(" Error While starting connection "+error);
       });
 
-
-      // this._hubConnection = new signalR.HubConnectionBuilder().withUrl("http://192.180.2.128.4242/blogHub",
-      // { 
-      //     skipNegotiation: true,
-      //      transport: signalR.HttpTransportType.WebSockets,
-      //      accessTokenFactory :()=> authToken
-
-      // }).withAutomaticReconnect().build();
-
-      
-      //  this._hubConnection.start().then(()=>{
-      //     console.log("Connection started ");
-
-      //     this.getNotes();
-      //     this.alarmTriggered()
-      //     this.getPinnedNotes();
-      // }).catch((error: any)=>{
-      //     console.log(" Error While starting connection "+error);
-      // });
   }
 
   addNote(note : any)
   {
     return this._hubConnection.invoke('AddNote',note).then((response:any)=>{
-      this.responseNoteModel.next(response.data)
+      this.responseNoteModel.next(response)
     }).catch((error:Error)=>{
       console.log(error)
     })
@@ -165,10 +147,22 @@ export class SocketConnectionService {
     this.getNotes()
   }
 
-  editNote( Editeddata : any)
+  editNote( Editdata : any)
   {
-    return this._hubConnection.invoke('EditNote',Editeddata).then((response:any)=>{
+    return this._hubConnection.invoke('EditNote',Editdata).then((response:any)=>{
+      this.EditNote.next(response)
       console.log(response);
     })
   }
+
+getSharedNotes()
+{
+
+  return this._hubConnection.invoke('GetSharedNotes').then((response :any)=>{
+    this.sharedNotes.next(response.data);
+    console.log(response)
+  }).catch((error:Error)=>{
+    console.log(error)
+  })
+}
 }

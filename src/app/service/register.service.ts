@@ -47,4 +47,18 @@ export class RegisterService {
     return this.client.httpPost(Constant.Url.fileUpload,File)
   }
 
+  Profile(data : any)
+  {
+    return this.client.httpPut(Constant.Url.profile,data)
+  }
+
+  ProfilePic( File : any)
+  {
+    return this.client.httpPut(Constant.Url.profilePic ,File)
+  }
+
+  getOnlineUsers()
+  {
+    return this.client.httpGet(Constant.Url.user);
+  }
 }

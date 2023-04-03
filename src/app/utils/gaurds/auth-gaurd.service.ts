@@ -12,13 +12,13 @@ export class AuthGaurdService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot):boolean{
     const { routeConfig } = route;
     const { path } = routeConfig as Route;
-  if ( path?.includes('home')||path?.includes('notes')|| path?.includes('trash') || path?.includes('archieve') || path?.includes('change') && !this.service.isLoggedIn()) {
+  if ( (path?.includes('home')||path?.includes('notes')|| path?.includes('trash') || path?.includes('archieve') || path?.includes('change') )&& !this.service.isLoggedIn()) {
 
     return true;
   }
   if ((path?.includes('sign-in') || path?.includes('login')) && !this.service.isLoggedIn()) {
 
-    this.router.navigate(['notes']);
+    this.router.navigate(['home']);
     return false;
   }
   if ((path?.includes('sign-in') || path?.includes('login')) && this.service.isLoggedIn()) {
@@ -27,10 +27,10 @@ export class AuthGaurdService implements CanActivate {
 
   }
 
-  if (path?.includes('home') && !this.service.isLoggedIn()) {
-    this.router.navigate(['/login']);
-    return false;
-  }
+  // if (path?.includes('home') && this.service.isLoggedIn()) {
+  //   this.router.navigate(['login']);
+  //   return false;
+  // }
   this.router.navigateByUrl('/login')
   return false;
 }

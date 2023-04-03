@@ -29,10 +29,11 @@
         </div>
     </div>
 </div>
-<div [ngSwitch]="selectedVal">
+<div [ngSwitch]="selectedValOfButton">
     <div *ngSwitchCase="'trash'"><app-trash></app-trash></div>
     <div *ngSwitchCase="'archieve'"><app-archive></app-archive></div>
     <div *ngSwitchCase="'notes'"><app-notes></app-notes></div>
+    <div *ngSwitchCase="'shared'"><app-shared></app-shared></div>
     <div *ngSwitchDefault ><app-notes></app-notes></div>
 </div>
 </div>

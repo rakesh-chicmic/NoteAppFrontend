@@ -1,8 +1,8 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatAccordion } from '@angular/material/expansion';
 import { ToastrService } from 'ngx-toastr';
+
 import { RegisterService } from 'src/app/service/register.service';
 import { SocketConnectionService } from 'src/app/service/socket-connection.service';
 import { Constant } from 'src/app/utils/constant';
@@ -17,9 +17,9 @@ export class NotesComponent implements OnInit {
 
   visible = false;
   @ViewChild(MatAccordion) accordion: MatAccordion | undefined;
+
   notes: string = '';
   notesForm: FormGroup;
-  clickCount: number = 0;
   notesArray: any = [];
   showDate: boolean = false;
   noteId: string = ''
@@ -27,66 +27,62 @@ export class NotesComponent implements OnInit {
   PinnedArray: any = [];
   isEmojiPickerVisible: boolean = false;
   validateTimer: boolean = false;
-  EditNoteForm : FormGroup;
+  Image = Constant.Upload.image;
+  Title: string = ''
+  Message: string = ''
   constructor(private fb: FormBuilder, private socketConnection: SocketConnectionService, private client: RegisterService, private toaster: ToastrService) {
-    this.socketConnection.getNotes()
-    this.socketConnection.allNotes.subscribe((response) => {
-      console.log(response)
-      this.notesArray = response
-    })
 
-    this.EditNoteForm = this.fb.group({
-      title: [''],
-      notesMessage : ['',Validators.compose([Validators.required])]
-    })
+
     this.notesForm = this.fb.group({
       title: [''],
       notesMessage: ['', Validators.compose([Validators.required])]
     })
-    
+
+  }
+  ngOnInit(): void {
+    this.socketConnection.getNotes()
+    this.socketConnection.allNotes.subscribe((response) => {
+      console.log(response)
+      this.notesArray = response;
+    })
+
     this.socketConnection.getPinnedNotes()
     this.socketConnection.pinnedNotes.subscribe((response) => {
       this.PinnedArray = response;
     })
   }
-  ngOnInit(): void {
-    this.loadData();
 
-  }
 
-  @HostListener('document:click')
-  clickInside() {
-    
-    
-    if (this.notesForm.valid) 
-    {
-      console.log(this.notesForm.value)
-  
-      this.notesArray.push(this.notesForm.value)
+  AddNote() {
+    console.log('heyyyyyyy')
+    if (this.notesForm.valid) {
 
-      
-      // let Title: string = this.notesForm.value.title;
-      // let Message = this.notesForm.value.notesMessage;
-      // let URL: string = 'abc'
-      // let MessageType: number = Constant.Upload.message;
-      // this.clickCount++;
-      // if (this.clickCount === 1) {
-      //   this.socketConnection.addNote({ Title, Message, MessageType, URL })
-      //   this.socketConnection.responseNoteModel.subscribe((response) => {
-      //     console.log(response);
-      //     this.notesArray.push(response)
-      //     console.log(this.notesArray)
-      //   })
-      // }
-      // else {
-      //   setTimeout(() => {
-      //     this.clickCount = 0;
-      //   }, 1000);
-      //   return;
-      // }
+      let Title: string = this.notesForm.value.title;
+      let Message = this.notesForm.value.notesMessage;
+      let URL: string | Blob = 'abc'
+      let MessageType: number = Constant.Upload.message;
 
+      if (this.imagePathFull) {
+        MessageType = Constant.Upload.image;
+        URL = this.imagePathFull;
+      }
+
+      this.socketConnection.addNote({ Title, Message, MessageType, URL })
+      this.socketConnection.responseNoteModel.subscribe((response: any) => {
+        if (response.isSuccess) {
+          this.toaster.success('Note Edited SuccessFully', 'Success',
+            {
+              titleClass: "center",
+              messageClass: "center"
+            })
+          console.log(response.data);
+          this.notesArray.push(response.data)
+          console.log(this.notesArray)
+        }
+      })
     }
     this.notesForm.reset();
+    this.imagePathFull = '';
   }
 
   showDatePicker(id: string) {
@@ -152,22 +148,12 @@ export class NotesComponent implements OnInit {
   uploadImage(event: any) {
     let imagePath = event.target.files[0];
 
-    let Title: string = this.notesForm.value.title;
-    let Message = this.notesForm.value.notesMessage;
-    let MessageType: number = Constant.Upload.image
-
     let formdata = new FormData();
     formdata.append('file', imagePath);
     this.client.uploadImage(formdata).subscribe((response: any) => {
       this.imagePathFull = Constant.Url.IP + response.data;
       let URL: string | Blob = this.imagePathFull
       console.log(response);
-      this.socketConnection.addNote({ Title, Message, MessageType, URL })
-      this.socketConnection.responseNoteModel.subscribe((response) => {
-        console.log(response);
-        this.notesArray.push(response)
-        console.log(this.notesArray)
-      })
     })
 
   }
@@ -186,69 +172,87 @@ export class NotesComponent implements OnInit {
 
     const dateTime = new Date((e.target as HTMLInputElement).value)
     const dateNow = new Date();
-    if (dateTime > dateNow) {
+    if (dateTime < dateNow) {
       this.validateTimer = true;
+    }
+    else
+    {
+      this.validateTimer=false
     }
   }
 
   Share(id: string) {
     let div = document.getElementsByClassName('collapse')[0];
     div.classList.add('show');
-    this.noteId = id
+    this.noteId = id;
   }
 
   onSubmit(data: NgForm) {
     let email = data.value.email;
     console.log(email);
-      this.socketConnection.shareNote(this.noteId, email);
-      this.socketConnection.shareNoteSubject.subscribe((response: any) => {
-        console.log(response);
+    this.socketConnection.shareNote(this.noteId, email);
+    this.socketConnection.shareNoteSubject.subscribe((response: any) => {
+      console.log(response);
 
-        if (response.isSuccess) {
-          this.toaster.success('Mail Sent SuccessFully', 'Success',
-            {
-              titleClass: "center",
-              messageClass: "center"
-            })
+      if (response.isSuccess) {
+        this.toaster.success('Mail Sent SuccessFully', 'Success',
+          {
+            titleClass: "center",
+            messageClass: "center"
+          })
 
-            let div = document.getElementsByClassName('collapse')[0];
-            div.classList.remove('show');
-        }
+        let div = document.getElementsByClassName('collapse')[0];
+        div.classList.remove('show');
+      }
 
-        else {
+      else {
 
-          this.toaster.warning('Please select a person to share', 'ALERT',
-            {
-              titleClass: "center",
-              messageClass: "center"
-            })
-          }
+        this.toaster.warning('Please select a person to share', 'ALERT',
+          {
+            titleClass: "center",
+            messageClass: "center"
+          })
+      }
     })
   }
 
-  editNote(id : string)
-  {
-    let NoteId = id;
-    let Title: string = this.EditNoteForm.value.title;
-    let Message = this.EditNoteForm.value.notesMessage;
-    let URL: string = 'abc'
-    let MessageType: number = Constant.Upload.message;
+  editNote(Note: any) {
+    let Title = Note.title;
+    let Message = Note.text;
+    if (this.Message) {
+      Message = this.Message;
 
-    this.socketConnection.editNote({NoteId ,Title ,Message , MessageType,URL}).then((response:any)=>{
- 
-      if(response.isSuccess)
-      {
+    }
+
+    if (this.Title) {
+      Title = this.Title
+
+    }
+
+    let URL: string | Blob = 'abc'
+    let MessageType: number = Constant.Upload.message;
+    let NoteId = Note.noteId
+
+    if (this.imagePathFull) {
+      MessageType = Constant.Upload.image;
+      URL = this.imagePathFull;
+    }
+    this.socketConnection.editNote({ NoteId, Title, Message, MessageType, URL });
+    this.socketConnection.EditNote.subscribe((response: any) => {
+
+      console.log(response)
+      if (response.isSuccess) {
         this.toaster.success('Note Edited SuccessFully', 'Success',
-        {
-          titleClass: "center",
-          messageClass: "center"
-        })
+          {
+            titleClass: "center",
+            messageClass: "center"
+          })
 
         this.accordion?.closeAll();
       }
 
-      else{
-        this.toaster.error(response.message , 'Error',{
+      else {
+        this.toaster.error(response.message, 'Error', {
           titleClass: "center",
           messageClass: "center"
         })
@@ -259,10 +263,11 @@ export class NotesComponent implements OnInit {
       console.log(response)
       this.notesArray = response;
     })
+    Title = '';
+    Message = '';
   }
 
-  updateImage(event : any)
-  {
+  updateImage(event: any) {
     let imagePath = event.target.files[0];
 
     let Title: string = this.notesForm.value.title;
@@ -275,47 +280,69 @@ export class NotesComponent implements OnInit {
       this.imagePathFull = Constant.Url.IP + response.data;
       let URL: string | Blob = this.imagePathFull
       console.log(response);
-      this.socketConnection.editNote({ Title, Message, MessageType, URL }).then((response:any)=>{
- 
-        if(response.isSuccess)
-        {
-          this.toaster.success('Note Edited SuccessFully', 'Success',
-          {
-            titleClass: "center",
-            messageClass: "center"
-          })
-  
-          this.accordion?.closeAll();
-        }
+      this.socketConnection.editNote({ Title, Message, MessageType, URL }).then((response: any) => {
 
-        
-          else{
-            this.toaster.error(response.message , 'Error',{
+        if (response.isSuccess) {
+          this.toaster.success('Note Edited SuccessFully', 'Success',
+            {
               titleClass: "center",
               messageClass: "center"
             })
-          }
+
+          this.accordion?.closeAll();
+        }
+
+
+        else {
+          this.toaster.error(response.message, 'Error', {
+            titleClass: "center",
+            messageClass: "center"
+          })
+        }
       })
       this.socketConnection.getNotes()
       this.socketConnection.allNotes.subscribe((response) => {
-      console.log(response)
-      this.notesArray = response
-    })
+        console.log(response)
+        this.notesArray = response
+      })
     })
   }
 
-  loadData()
-  {
-    for ( let note of this.notesArray)
+
+  toggleCollapse(id:number) {
+    if(this.notesArray[id].isVisible)
     {
-      this.EditNoteForm.patchValue({
-        title : note.title,
-        notesMessage : note.text
-      })
+      this.notesArray[id].isVisible=false;
+    }
+    else
+    {
+      this.notesArray[id].isVisible=true;
     }
   }
 
-  toggleCollapse() {
-    this.visible = !this.visible;
+  toggleCollapsePin(id:number)
+  {
+    if(this.PinnedArray[id].isVisible)
+    {
+      this.PinnedArray[id].isVisible=false;
+    }
+    else
+    {
+      this.PinnedArray[id].isVisible=true;
+    }
   }
+  showEditForm() {
+
+    console.log('gfdshfgdhsz')
+    let div = document.getElementsByClassName('fade')[0];
+    div.classList.add('show');
   }
+
+  getValueOfTitle(event: any) {
+    this.Title = event.target.value
+  }
+
+  getValueOfMessage(event: any) {
+    this.Message = event.target.value
+  }
+}
