@@ -21,7 +21,7 @@ const route : Routes = [
     path : 'forgot' , component: ForgetPasswordComponent 
   },
   {
-    path : 'reset' , component: ResetPasswordComponent ,canActivate :[AuthGaurdService]
+    path : 'reset' , component: ResetPasswordComponent 
   },
   {
     path : 'change' , component: ChangePasswordComponent ,canActivate :[AuthGaurdService]

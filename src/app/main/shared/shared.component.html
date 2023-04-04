@@ -5,11 +5,12 @@
           <div *ngFor="let notes of sharedArray ; let i=index" class="display">
             <mat-card class="example-card">
               <mat-card-header>
-                <mat-card-title><input type="text"   class="showValue" [value]=notes.title  placeholder="Title ...." disabled></mat-card-title>
-                <mat-card-subtitle><input type="text" name="" id=""  [value]=notes.text  class="showValue"  placeholder="Text.." disabled></mat-card-subtitle>
+                <mat-card-title><input type="text"   class="showValue" [value]=notes.title  (change)="getValueOfTitle($event)" placeholder="Title ...." ></mat-card-title>
+                <mat-card-subtitle><input type="text"  [value]=notes.text  class="showValue" (change)="getValueOfMessage($event)"  placeholder="Text.." ></mat-card-subtitle>
+                <input type="file" hidden id="img" #img accept="image/*" (change)="uploadImage($event)">
               </mat-card-header>
               <div *ngIf="notes.messageType === MessageType">
-              <img  mat-card-image [src]=notes.images >
+              <img  mat-card-image [src]=notes.images  style=" width: 50px; height: 50px;" >
              </div>
               <mat-card-content>
                 <div *ngIf="notes.isReminder"> <p>Remainder Added <mat-icon>timer</mat-icon> </p></div>
@@ -18,13 +19,14 @@
                   <c-card class="mt-3 shadow">
                     <c-card-body>
                       <div class="footer d-flex flex-wrap ">
-                        
+                        <button class="btn" (click)="img.click()"><mat-icon>insert_photo</mat-icon></button>
                       </div>
                     </c-card-body>
                   </c-card>
                 </div>
               </mat-card-content>
               <mat-card-actions>
+                <button class="btn" type="button" (click)="editNote(notes)"><mat-icon>create</mat-icon></button>
                 <button mat-button (click)="toggleCollapse(i)">Options</button>
               </mat-card-actions>
             </mat-card>

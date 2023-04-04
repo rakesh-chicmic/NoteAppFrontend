@@ -87,7 +87,6 @@ export class NotesComponent implements OnInit {
 
   showDatePicker(id: string) {
     this.noteId = id
-    this.showDate = true;
     let div = document.getElementsByClassName('modal')[0];
     div.classList.add('show')
   }
@@ -101,6 +100,24 @@ export class NotesComponent implements OnInit {
     alert(this.noteId);
     this.socketConnection.addTimer(this.noteId, this.filterDateFrom).then((response: any) => {
       console.log(response);
+      if (response.isSuccess) {
+        this.toaster.success('Timer added Succesfully', 'Success',
+          {
+            titleClass: "center",
+            messageClass: "center"
+          })
+          let div = document.getElementsByClassName('modal')[0];
+          div.classList.remove('show')
+        }
+
+        else
+        {
+          this.toaster.error(response.message, 'error',
+          {
+            titleClass: "center",
+            messageClass: "center"
+          })
+        }
     })
 
     this.socketConnection.getNotes();
@@ -121,7 +138,7 @@ export class NotesComponent implements OnInit {
   }
 
   unpin(id: string) {
-    this.socketConnection.pinNote(id, Constant.value.unpin);
+    this.socketConnection.pinNote(id, Constant.value.unpin)
     this.socketConnection.getPinnedNotes()
     this.socketConnection.pinnedNotes.subscribe((response) => {
       this.PinnedArray = response;
@@ -149,7 +166,7 @@ export class NotesComponent implements OnInit {
     let imagePath = event.target.files[0];
 
     let formdata = new FormData();
-    formdata.append('file', imagePath);
+    formdata.append('File', imagePath);
     this.client.uploadImage(formdata).subscribe((response: any) => {
       this.imagePathFull = Constant.Url.IP + response.data;
       let URL: string | Blob = this.imagePathFull
@@ -195,7 +212,7 @@ export class NotesComponent implements OnInit {
       console.log(response);
 
       if (response.isSuccess) {
-        this.toaster.success('Mail Sent SuccessFully', 'Success',
+        this.toaster.success('Note shared Successfully', 'Success',
           {
             titleClass: "center",
             messageClass: "center"
@@ -267,47 +284,7 @@ export class NotesComponent implements OnInit {
     Message = '';
   }
 
-  updateImage(event: any) {
-    let imagePath = event.target.files[0];
-
-    let Title: string = this.notesForm.value.title;
-    let Message = this.notesForm.value.notesMessage;
-    let MessageType: number = Constant.Upload.image
-
-    let formdata = new FormData();
-    formdata.append('file', imagePath);
-    this.client.uploadImage(formdata).subscribe((response: any) => {
-      this.imagePathFull = Constant.Url.IP + response.data;
-      let URL: string | Blob = this.imagePathFull
-      console.log(response);
-      this.socketConnection.editNote({ Title, Message, MessageType, URL }).then((response: any) => {
-
-        if (response.isSuccess) {
-          this.toaster.success('Note Edited SuccessFully', 'Success',
-            {
-              titleClass: "center",
-              messageClass: "center"
-            })
-
-          this.accordion?.closeAll();
-        }
-
-
-        else {
-          this.toaster.error(response.message, 'Error', {
-            titleClass: "center",
-            messageClass: "center"
-          })
-        }
-      })
-      this.socketConnection.getNotes()
-      this.socketConnection.allNotes.subscribe((response) => {
-        console.log(response)
-        this.notesArray = response
-      })
-    })
-  }
-
+ 
 
   toggleCollapse(id:number) {
     if(this.notesArray[id].isVisible)

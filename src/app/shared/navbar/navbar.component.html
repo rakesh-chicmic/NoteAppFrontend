@@ -2,19 +2,6 @@
     <div class="container-fluid">
         <button class="btn" (click)="showSidebar()"> <mat-icon>dehaze</mat-icon></button>
     <div>
-      <form class="d-flex input-group w-auto">
-        <input
-          type="search"
-          class="form-control rounded"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="search-addon"
-        />
-        <span class="input-group-text text-white border-0" id="search-addon">
-          <mat-icon>searchx</mat-icon>
-        </span>
-
-    </form>
 </div>
 <button class="btn" (click)="logOut()"> <mat-icon>power_settings_new</mat-icon></button>
 <button class="btn" (click)="changePass()"> change password</button>
@@ -27,7 +14,6 @@
 <c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal">
   <c-modal-header>
     <h5 cModalTitle>Profile</h5>
-    <button [cModalToggle]="staticBackdropModal.id" button>Close</button>
   </c-modal-header>
   <c-modal-body>
     <div class="d-flex flex-column">

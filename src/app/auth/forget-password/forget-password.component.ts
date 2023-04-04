@@ -21,7 +21,7 @@ export class ForgetPasswordComponent {
         this.client.forgotPassword("192.180.2.133:4200/reset",data.value.email).subscribe((result:any)=>{
             console.log(result);
             this.messageShow = true;
-            if(result.statusCode===200)
+            if(result.statusCode===200) 
             {
               this.toaster.success('Mail Sent Successfully ', 'Sucesss',
               {

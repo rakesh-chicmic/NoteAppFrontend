@@ -1,7 +1,6 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGaurdService } from './utils/gaurds/auth-gaurd.service';
 import { InterceptorService } from './utils/interceptor/interceptor.service';
 
 const routes: Routes = [

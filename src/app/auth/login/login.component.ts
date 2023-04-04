@@ -55,8 +55,7 @@ throw new Error('Method not implemented.');
       {
         this.toaster.error(response.message ,'Major Error', {
           titleClass: "center",
-            messageClass: "center",
-         toastClass : 'toast-container' 
+            messageClass: "center", 
         });
       }
     })

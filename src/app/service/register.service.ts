@@ -22,8 +22,8 @@ export class RegisterService {
     return this.client.httpPost(Constant.Url.sendMail, { url, email })
   }
 
-  resetPassword(newPass: string) {
-    return this.client.httpPost(Constant.Url.resetPassword, { newPass })
+  resetPassword(newPassword: string) {
+    return this.client.httpPost(Constant.Url.resetPassword,{newPassword} )
   }
 
   changePassword(oldPassword: string, newPassword: string) {

@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit , OnDestroy {
             messageClass: "center"
 
          })
-
+            this.socketConnection.getNotes();
          setTimeout(() => {
            this.showRemainderNote = true
          }, 5000);

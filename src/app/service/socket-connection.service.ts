@@ -21,10 +21,10 @@ export class SocketConnectionService {
   EditNote = new Subject;
   sharedNotes = new Subject;
 
-  public startConnection()
+   public  async  startConnection()
   {
       
-      this._hubConnection = new signalR.HubConnectionBuilder().withUrl(`${socketApi}`,
+     this._hubConnection = new signalR.HubConnectionBuilder().withUrl(`${socketApi}`,
       { 
           skipNegotiation: true,
            transport: signalR.HttpTransportType.WebSockets,
@@ -33,7 +33,7 @@ export class SocketConnectionService {
       }).withAutomaticReconnect().build();
 
       
-       this._hubConnection.start().then(()=>{
+      await this._hubConnection.start().then(()=>{
           console.log("Connection started ");
 
           this.getNotes();
@@ -56,9 +56,8 @@ export class SocketConnectionService {
 
   addTimer(Id:string,Time: string)
   {
-    return this._hubConnection.invoke('AddReminder',Id,Time).then((response:any)=>{
-      console.log(response);
-    })
+    return this._hubConnection.invoke('AddReminder',Id,Time)
+
   }
 
   getNotes()
@@ -126,7 +125,8 @@ export class SocketConnectionService {
   {
      this._hubConnection.on('alarmTriggered',(response:any)=>{
       this.alarmTriggeredSubject.next(response)
-        console.log(response)
+        this.getNotes()
+        console.log(response);
       })
   }
 

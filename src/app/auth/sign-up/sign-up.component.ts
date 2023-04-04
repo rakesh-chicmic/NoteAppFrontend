@@ -24,7 +24,6 @@ export class SignUpComponent {
           lastName:['',Validators.required],
           email:['', Validators.compose([Validators.required,Validators.pattern(REGEX.EMAIL)])],
           phone:['',Validators.compose([Validators.required,Validators.pattern("^[6-9]\\d{9}$")])],
-          dateOfBirth:['',Validators.compose([Validators.required])],
           password:['',Validators.compose([Validators.required,Validators.pattern(REGEX.PASSWORD)])]
       })
   }

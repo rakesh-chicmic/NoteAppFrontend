@@ -9,20 +9,17 @@
                 <mat-card-subtitle><input type="text" name="" id=""  [value]=notes.text  class="showValue"  placeholder="Text.." disabled></mat-card-subtitle>
               </mat-card-header>
               <div *ngIf="notes.messageType === MessageType">
-              <img  mat-card-image src=notes.images alt="Photo of a Shiba Inu">
+              <img  mat-card-image src=notes.images  style=" width: 50px; height: 50px;">
              </div>
               <mat-card-content>
-                <div *ngIf="notes.isReminder"> <p>Remainder Added <mat-icon>timer</mat-icon> </p></div>
-                    <div *ngIf="notes.isShared"> <p>Shared Added <mat-icon>person_add</mat-icon> </p></div>
                 <div [visible]="notes.isVisible" cCollapse #card="cCollapse">
                   <c-card class="mt-3 shadow">
                     <c-card-body>
                       <div class="footer d-flex flex-wrap ">
                         <button class="btn" title="share"><mat-icon>person_add</mat-icon></button>
-  <button class="btn" title="Upload Image"><mat-icon>insert_photo</mat-icon></button>
-  <button class="btn"title="updateNote"><mat-icon>create</mat-icon></button>
-  <button class="btn" title="Close"><mat-icon>cancel</mat-icon></button>
-  <button class="btn" title="unarchive" (click)="unArchieve(notes.noteId)"><mat-icon>unarchive</mat-icon></button>
+                     <button class="btn" title="Upload Image"><mat-icon>insert_photo</mat-icon></button>
+                    <button class="btn"title="updateNote"><mat-icon>create</mat-icon></button>
+                     <button class="btn" title="unarchive" (click)="unArchieve(notes.noteId)"><mat-icon>unarchive</mat-icon></button>
                       </div>
                     </c-card-body>
                   </c-card>

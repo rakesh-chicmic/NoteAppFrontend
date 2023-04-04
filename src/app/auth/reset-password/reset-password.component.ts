@@ -22,11 +22,13 @@ export class ResetPasswordComponent implements OnInit {
       password :['',Validators.compose([Validators.required , Validators.pattern(REGEX.PASSWORD)])],
       confirmPassword : ['' ,Validators.compose([Validators.required, Validators.pattern(REGEX.PASSWORD)])]
   })
+
+  this.activeRoute.queryParams.subscribe((val:any)=>{
+    this.service.registerToken(val['token']);
+   })
   }
   ngOnInit(): void {
-    this.activeRoute.queryParams.subscribe((val:any)=>{
-     this.service.registerToken(val['token']);
-    })
+    
  }
 
 
@@ -50,18 +52,18 @@ resetPass()
   if(this.resetPasswordForm.valid)
     {
 
-     this.service.resetPassword(this.resetPasswordForm.value).subscribe((response :any)=>{
+     this.service.resetPassword(this.resetPasswordForm.value['password']).subscribe((response :any)=>{
 
       if(response.isSuccess)
       {
+        localStorage.clear();
 
         this.toaster.success('Password Changed Successfully', 'Sucesss',
           {
             titleClass: "center",
             messageClass: "center"
           })
-        localStorage.clear();
-        this.route.navigate(['/login']);
+        this.route.navigateByUrl('/login');
       }
 
       else

@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { RegisterService } from './service/register.service';
-import { SocketConnectionService } from './service/socket-connection.service';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
@@ -10,8 +9,6 @@ import { SocketConnectionService } from './service/socket-connection.service';
 export class AppComponent {
   title = 'keepApp';
 
-  constructor(private socket : SocketConnectionService ){
-  }
 
 
 }
