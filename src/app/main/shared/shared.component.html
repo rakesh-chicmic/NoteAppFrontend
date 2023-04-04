@@ -6,7 +6,7 @@
             <mat-card class="example-card">
               <mat-card-header>
                 <mat-card-title><input type="text"   class="showValue" [value]=notes.title  (change)="getValueOfTitle($event)" placeholder="Title ...." ></mat-card-title>
-                <mat-card-subtitle><input type="text"  [value]=notes.text  class="showValue" (change)="getValueOfMessage($event)"  placeholder="Text.." ></mat-card-subtitle>
+                <mat-card-subtitle><input type="text" (change)="getValueOfMessage($event)"  [value]=notes.text  class="showValue"   placeholder="Text.." ></mat-card-subtitle>
                 <input type="file" hidden id="img" #img accept="image/*" (change)="uploadImage($event)">
               </mat-card-header>
               <div *ngIf="notes.messageType === MessageType">

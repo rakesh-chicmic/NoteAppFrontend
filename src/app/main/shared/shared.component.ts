@@ -12,8 +12,8 @@ import { Constant } from 'src/app/utils/constant';
 export class SharedComponent implements OnInit {
 
   sharedArray :any =[];
-  Title: any;
-  Message: any;
+  Title: string ='';
+  Message: string ='';
   imagePathFull: string | Blob = ' ';
   constructor(private socketConnection : SocketConnectionService , private toaster : ToastrService , private client : RegisterService){}
   ngOnInit(): void {
@@ -34,48 +34,39 @@ export class SharedComponent implements OnInit {
     }
   }
 
-  getValueOfTitle(event: any) {
-    this.Title = event.target.value
-  }
-
-  getValueOfMessage(event: any) {
-    this.Message = event.target.value
-  }
-
+  
   editNote(Note: any) {
     let Title = Note.title;
     let Message = Note.text;
-    if (this.Message) {
-      Message = this.Message;
-
-    }
-
+    
+    
     if (this.Title) {
       Title = this.Title
-
     }
-
+    if (this.Message) {
+      Message = this.Message;
+    }
     let URL: string | Blob = 'abc'
     let MessageType: number = Constant.Upload.message;
     let NoteId = Note.noteId
-
+    
     if (this.imagePathFull) {
       MessageType = Constant.Upload.image;
       URL = this.imagePathFull;
     }
     this.socketConnection.editNote({ NoteId, Title, Message, MessageType, URL });
     this.socketConnection.EditNote.subscribe((response: any) => {
-
+      
       console.log(response)
       if (response.isSuccess) {
         this.toaster.success('Note Edited SuccessFully', 'Success',
-          {
-            titleClass: "center",
-            messageClass: "center"
-          })
-
+        {
+          titleClass: "center",
+          messageClass: "center"
+        })
+        
       }
-
+      
       else {
         this.toaster.error(response.message, 'Error', {
           titleClass: "center",
@@ -91,10 +82,10 @@ export class SharedComponent implements OnInit {
     Title = '';
     Message = '';
   }
-
+  
   uploadImage(event: any) {
     let imagePath = event.target.files[0];
-
+    
     let formdata = new FormData();
     formdata.append('file', imagePath);
     this.client.uploadImage(formdata).subscribe((response: any) => {
@@ -102,7 +93,14 @@ export class SharedComponent implements OnInit {
       let URL: string | Blob = this.imagePathFull
       console.log(response);
     })
-
+    
   }
 
+  getValueOfTitle(event: any) {
+    this.Title = event.target.value
+  }
+  
+  getValueOfMessage(event: any) {
+    this.Message = event.target.value
+  }
 }
