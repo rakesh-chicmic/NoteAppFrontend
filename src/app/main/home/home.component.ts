@@ -8,34 +8,33 @@ import { Constant } from 'src/app/utils/constant';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit , OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
 
   events: string[] = [];
-  opened: boolean =false;
-  Showbutton : Array<string> = Constant.ButtonArray;
-  selectedValOfButton :string ='';
-  remainderNote : any =[]
+  opened: boolean = false;
+  Showbutton: Array<string> = Constant.ButtonArray;
+  selectedValOfButton: string = '';
+  remainderNote: any = []
   showRemainderNote = false
-  constructor(private socketConnection : SocketConnectionService , private toaster : ToastrService){
+  constructor(private socketConnection: SocketConnectionService, private toaster: ToastrService) {
     this.socketConnection.startConnection();
-    this.socketConnection.alarmTriggeredSubject.subscribe((response : any)=>{
-      if(response.isSuccess)
-      {
-       this.remainderNote.push(response.data)
-         this.toaster.warning("You Have a Note Remainder ","Remainder",{
-            titleClass: "center",
-            messageClass: "center"
+    this.socketConnection.alarmTriggeredSubject.subscribe((response: any) => {
+      if (response.isSuccess) {
+        this.remainderNote.push(response.data)
+        this.toaster.warning("Title: " + response.data.title, "Reminder", {
+          titleClass: "center",
+          messageClass: "center"
 
-         })
-            this.socketConnection.getNotes();
-         setTimeout(() => {
-           this.showRemainderNote = true
-         }, 5000);
+        })
+        this.socketConnection.getNotes();
+        setTimeout(() => {
+          this.showRemainderNote = true
+        }, 5000);
       }
     })
   }
-    ngOnInit() {
-      
+  ngOnInit() {
+
   }
 
   close() {
@@ -47,9 +46,8 @@ export class HomeComponent implements OnInit , OnDestroy {
     this.socketConnection._hubConnection?.off("recieveMessage")
   }
 
-  showComponent(event: any)
-  {
-     console.log(event.target.value)
-     this.selectedValOfButton=event.target.value;
+  showComponent(event: any) {
+    console.log(event.target.value)
+    this.selectedValOfButton = event.target.value;
   }
 }

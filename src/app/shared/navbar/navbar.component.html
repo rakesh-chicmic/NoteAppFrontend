@@ -1,40 +1,35 @@
-<nav class="navbar navbar-dark bg-light d-flex flex-row">
-    <div class="container-fluid">
-        <button class="btn" (click)="showSidebar()"> <mat-icon>dehaze</mat-icon></button>
+<nav class="navbar">
+  <div class="container-fluid justify-content-between">
+    <button class="btn" (click)="showSidebar()"> <mat-icon>dehaze</mat-icon></button>
     <div>
-</div>
-<button class="btn" (click)="logOut()"> <mat-icon>power_settings_new</mat-icon></button>
-<button class="btn" (click)="changePass()"> change password</button>
-<button class="btn"  [cModalToggle]="staticBackdropModal.id"> <mat-icon>person</mat-icon> </button>
-</div>
+
+      <button class="btn" (click)="logOut()"> <mat-icon>power_settings_new</mat-icon></button>
+      <!-- <button class="btn" (click)="changePass()"> Change Password</button> -->
+      <button class="btn" [cModalToggle]="staticBackdropModal.id"> <mat-icon>person</mat-icon> </button>
+    </div>
+  </div>
 </nav>
-
-
 
 <c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal">
   <c-modal-header>
-    <h5 cModalTitle>Profile</h5>
+    <div cModalTitle class="d-flex flex-row justify-content-between">
+      <button class="btn" (click)="img.click()"><mat-icon>insert_photo</mat-icon></button>
+    </div>
+    <div *ngFor=" let user of UserDeatils" style="float: right;" class="mt-0">
+      {{user.firstName}} {{user.lastName}}
+    </div>
   </c-modal-header>
   <c-modal-body>
     <div class="d-flex flex-column">
-    <div class="align-self-center">
-    <img [src]=imagePath  alt="" srcset="" style="width: inherit; height: 100px; border-radius: 50%;">
-    <input type="file" hidden id="img" #img accept="image/*" (change)="UploadProfilePhoto($event)">
-    <button class="btn" (click)="img.click()"><mat-icon> insert_photo</mat-icon></button>
-  </div>
-    <div class="align-self-center">
-      <div *ngFor=" let user of UserDeatils">
-        <p>
-          {{user.firstName}}
-        </p>
+      <div class="align-self-center">
+        <img [src]=imagePath alt="" srcset="" style="width: inherit; height: 100px; border-radius: 50%;">
+        <input type="file" hidden id="img" #img accept="image/*" (change)="UploadProfilePhoto($event)">
       </div>
     </div>
-  </div>
   </c-modal-body>
   <c-modal-footer>
-    <button [cModalToggle]="staticBackdropModal.id" cButton color="secondary">
+    <button [cModalToggle]="staticBackdropModal.id" cButton class="btn btn-primary">
       Close
     </button>
-    <!-- <button cButton color="primary">Understood</button> -->
   </c-modal-footer>
 </c-modal>

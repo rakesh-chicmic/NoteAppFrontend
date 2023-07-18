@@ -1,13 +1,7 @@
-.sidebar
-{
-  width: 200px;
-  height: 800px;
-}
-.main-content
-{
-    width: fit-content;
-    height: fit-content;
+.main-content {
+  width: 100%;
+  height: 100vh;
   display: flex;
-  margin-left: 100px;
-
+  //justify-content: center;
+  background-color: darkslategray;
 }

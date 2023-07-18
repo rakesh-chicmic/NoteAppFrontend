@@ -52,9 +52,7 @@ export class NotesComponent implements OnInit {
     })
   }
 
-
   AddNote() {
-    console.log('heyyyyyyy')
     if (this.notesForm.valid) {
 
       let Title: string = this.notesForm.value.title;
@@ -70,7 +68,7 @@ export class NotesComponent implements OnInit {
       this.socketConnection.addNote({ Title, Message, MessageType, URL })
       this.socketConnection.responseNoteModel.subscribe((response: any) => {
         if (response.isSuccess) {
-          this.toaster.success('Note Edited SuccessFully', 'Success',
+          this.toaster.success('Note Created SuccessFully', '',
             {
               titleClass: "center",
               messageClass: "center"
@@ -101,23 +99,22 @@ export class NotesComponent implements OnInit {
     this.socketConnection.addTimer(this.noteId, this.filterDateFrom).then((response: any) => {
       console.log(response);
       if (response.isSuccess) {
-        this.toaster.success('Timer added Succesfully', 'Success',
+        this.toaster.success('Reminder Added', '',
           {
             titleClass: "center",
             messageClass: "center"
           })
-          let div = document.getElementsByClassName('modal')[0];
-          div.classList.remove('show')
-        }
+        let div = document.getElementsByClassName('modal')[0];
+        div.classList.remove('show')
+      }
 
-        else
-        {
-          this.toaster.error(response.message, 'error',
+      else {
+        this.toaster.error(response.message, 'error',
           {
             titleClass: "center",
             messageClass: "center"
           })
-        }
+      }
     })
 
     this.socketConnection.getNotes();
@@ -146,7 +143,7 @@ export class NotesComponent implements OnInit {
   }
   moveToTrash(id: string) {
     this.socketConnection.trashNote(id, Constant.value.True);
-    this.toaster.warning('Moved To trash', 'Sucesss',
+    this.toaster.warning('Moved To trash', '',
       {
         titleClass: "center",
         messageClass: "center"
@@ -155,7 +152,7 @@ export class NotesComponent implements OnInit {
 
   moveToArchieve(id: string) {
     this.socketConnection.archieveNote(id, Constant.value.True);
-    this.toaster.warning('Moved To archieve', 'Sucesss',
+    this.toaster.warning('Moved To archieve', '',
       {
         titleClass: "center",
         messageClass: "center"
@@ -180,11 +177,6 @@ export class NotesComponent implements OnInit {
   }
 
 
-  addEmoji(event: any) {
-    let data = this.notesForm.get('inputField');
-    data?.patchValue(data.value + event.emoji.native)
-  }
-
   validateRemainder(e: Event) {
 
     const dateTime = new Date((e.target as HTMLInputElement).value)
@@ -192,9 +184,8 @@ export class NotesComponent implements OnInit {
     if (dateTime < dateNow) {
       this.validateTimer = true;
     }
-    else
-    {
-      this.validateTimer=false
+    else {
+      this.validateTimer = false
     }
   }
 
@@ -212,7 +203,7 @@ export class NotesComponent implements OnInit {
       console.log(response);
 
       if (response.isSuccess) {
-        this.toaster.success('Note shared Successfully', 'Success',
+        this.toaster.success('Note shared Successfully', '',
           {
             titleClass: "center",
             messageClass: "center"
@@ -224,7 +215,7 @@ export class NotesComponent implements OnInit {
 
       else {
 
-        this.toaster.warning('Please select a person to share', 'ALERT',
+        this.toaster.warning('Enter collaborator email', '',
           {
             titleClass: "center",
             messageClass: "center"
@@ -259,7 +250,7 @@ export class NotesComponent implements OnInit {
 
       console.log(response)
       if (response.isSuccess) {
-        this.toaster.success('Note Edited SuccessFully', 'Success',
+        this.toaster.success('Note Edited SuccessFully', '',
           {
             titleClass: "center",
             messageClass: "center"
@@ -284,33 +275,27 @@ export class NotesComponent implements OnInit {
     Message = '';
   }
 
- 
 
-  toggleCollapse(id:number) {
-    if(this.notesArray[id].isVisible)
-    {
-      this.notesArray[id].isVisible=false;
+
+  toggleCollapse(id: number) {
+    if (this.notesArray[id].isVisible) {
+      this.notesArray[id].isVisible = false;
     }
-    else
-    {
-      this.notesArray[id].isVisible=true;
+    else {
+      this.notesArray[id].isVisible = true;
     }
   }
 
-  toggleCollapsePin(id:number)
-  {
-    if(this.PinnedArray[id].isVisible)
-    {
-      this.PinnedArray[id].isVisible=false;
+  toggleCollapsePin(id: number) {
+    if (this.PinnedArray[id].isVisible) {
+      this.PinnedArray[id].isVisible = false;
     }
-    else
-    {
-      this.PinnedArray[id].isVisible=true;
+    else {
+      this.PinnedArray[id].isVisible = true;
     }
   }
   showEditForm() {
 
-    console.log('gfdshfgdhsz')
     let div = document.getElementsByClassName('fade')[0];
     div.classList.add('show');
   }

@@ -10,34 +10,32 @@ import { RegisterService } from 'src/app/service/register.service';
   styleUrls: ['./forget-password.component.scss']
 })
 export class ForgetPasswordComponent {
-  constructor( private route :Router , private client :RegisterService , private toaster : ToastrService) {}
-    message:string='';
-    messageShow:boolean=false;
+  constructor(private route: Router, private client: RegisterService, private toaster: ToastrService) { }
+  message: string = '';
+  messageShow: boolean = false;
 
-    onSubmit(data:NgForm)
-    {
-        let email = data.value.email;
-        console.log(email)
-        this.client.forgotPassword("192.180.2.133:4200/reset",data.value.email).subscribe((result:any)=>{
-            console.log(result);
-            this.messageShow = true;
-            if(result.statusCode===200) 
-            {
-              this.toaster.success('Mail Sent Successfully ', 'Sucesss',
-              {
-                titleClass: "center",
-                messageClass: "center"
-              })
-              this.route.navigateByUrl('/login');
-            }
+  onSubmit(data: NgForm) {
+    let email = data.value.email;
+    console.log(email)
+    this.client.forgotPassword("http://localhost:4200/reset", data.value.email).subscribe((result: any) => {
+      console.log(result);
+      this.messageShow = true;
+      if (result.statusCode === 200) {
+        this.toaster.success('Verify your Email', 'Sucesss',
+          {
+            titleClass: "center",
+            messageClass: "center"
+          })
+        this.route.navigateByUrl('/login');
+      }
 
-            else{
-              this.toaster.error(result.message , 'Error',{
-                titleClass: "center",
-                messageClass: "center"
-              })
-            }
+      else {
+        this.toaster.error(result.message, 'Error', {
+          titleClass: "center",
+          messageClass: "center"
         })
-        //this.modalRef.close()
-    }
+      }
+    })
+    //this.modalRef.close()
+  }
 }

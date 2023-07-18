@@ -16,69 +16,72 @@ export class ResetPasswordComponent implements OnInit {
   isConfirmPasswordDirty = false;
   confirmPasswordClass = 'form-control'
   showPassword: boolean = true;
-  resetPasswordForm : FormGroup ; 
-  constructor(private service : RegisterService ,private activeRoute : ActivatedRoute,private route : Router , private fb : FormBuilder , private toaster : ToastrService){
+  resetPasswordForm: FormGroup;
+  constructor(private service: RegisterService, private activeRoute: ActivatedRoute, private route: Router, private fb: FormBuilder, private toaster: ToastrService) {
     this.resetPasswordForm = this.fb.group({
-      password :['',Validators.compose([Validators.required , Validators.pattern(REGEX.PASSWORD)])],
-      confirmPassword : ['' ,Validators.compose([Validators.required, Validators.pattern(REGEX.PASSWORD)])]
-  })
+      password: ['', Validators.compose([Validators.required, Validators.pattern(REGEX.PASSWORD)])],
+      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern(REGEX.PASSWORD)])]
+    })
 
-  this.activeRoute.queryParams.subscribe((val:any)=>{
-    this.service.registerToken(val['token']);
-   })
-  }
-  ngOnInit(): void {
-    
- }
-
-
- checkPasswords(pw: string, cpw: string) {
-  this.isConfirmPasswordDirty = true;
-  if (pw == cpw) {
-    this.passwordsMatching = true;
-    this.confirmPasswordClass = 'form-control is-valid';
-  } else {
-    this.passwordsMatching = false;
-    this.confirmPasswordClass = 'form-control is-invalid';
-  }
-}
-
-public togglePasswordVisibility(): void {
-  this.showPassword = !this.showPassword;
-}
-
-resetPass()
-{
-  if(this.resetPasswordForm.valid)
-    {
-
-     this.service.resetPassword(this.resetPasswordForm.value['password']).subscribe((response :any)=>{
-
-      if(response.isSuccess)
-      {
-        localStorage.clear();
-
-        this.toaster.success('Password Changed Successfully', 'Sucesss',
-          {
-            titleClass: "center",
-            messageClass: "center"
-          })
-        this.route.navigateByUrl('/login');
-      }
-
-      else
-      {
-        this.toaster.warning('Please enter same Password ', 'Alert',
-        {
-          titleClass: "center",
-          messageClass: "center"
-        })
-      }
+    this.activeRoute.queryParams.subscribe((val: any) => {
+      this.service.registerToken(val['token']);
     })
   }
-    else
-    {
-        Object.keys(this.resetPasswordForm.controls).forEach(key=>this.resetPasswordForm.controls[key].markAsTouched({onlySelf:true}))
+  ngOnInit(): void {
+
+  }
+
+
+  checkPasswords(pw: string, cpw: string) {
+    this.isConfirmPasswordDirty = true;
+    if (pw == cpw) {
+      this.passwordsMatching = true;
+      this.confirmPasswordClass = 'form-control is-valid';
+    } else {
+      this.passwordsMatching = false;
+      this.confirmPasswordClass = 'form-control is-invalid';
     }
-}
+  }
+
+  public togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  resetPass() {
+    if (this.resetPasswordForm.valid) {
+
+      this.service.resetPassword(this.resetPasswordForm.value['password']).subscribe((response: any) => {
+        if (response.isSuccess = null) {
+
+          this.toaster.success('Link Expired', 'Alert',
+            {
+              titleClass: "center",
+              messageClass: "center"
+            })
+          this.route.navigateByUrl('/login');
+        }
+        if (response.isSuccess) {
+          localStorage.clear();
+
+          this.toaster.success('Password Changed Successfully', 'Sucesss',
+            {
+              titleClass: "center",
+              messageClass: "center"
+            })
+          this.route.navigateByUrl('/login');
+        }
+
+        else {
+          this.toaster.warning('Link Expired', '',
+            {
+              titleClass: "center",
+              messageClass: "center"
+            })
+        }
+      })
+    }
+    else {
+      Object.keys(this.resetPasswordForm.controls).forEach(key => this.resetPasswordForm.controls[key].markAsTouched({ onlySelf: true }))
+    }
+  }
 }

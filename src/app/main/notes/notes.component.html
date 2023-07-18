@@ -1,155 +1,150 @@
-
-<div class="d-flex flex-row">
-<div class="container">
-  <div class="addNote">
-    <mat-accordion  class="blur">
-      <mat-expansion-panel [disabled]="false"
-      #mep="matExpansionPanel" [ngClass]=" ">
+<div class="addNote">
+  <div class="createNoteForm">
+    <mat-accordion>
+      <mat-expansion-panel [disabled]="false" #mep="matExpansionPanel" [ngClass]=" ">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Note
           </mat-panel-title>
           <mat-panel-description>
-            <strong> Add Note ...</strong>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="d-flex flex-column">
           <form [formGroup]="notesForm" class="d-flex flex-column align-items-center" (ngSubmit)="AddNote()">
-            <input type="text" placeholder="Title" class="modal-title" formControlName="title">
-            <input type="text" placeholder="Take a note ...." class="modal-text" formControlName="notesMessage">
-
-            <!-- <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible;">😀</button>
-<emoji-mart class="emoji-mart" *ngIf="isEmojiPickerVisible" (emojiSelect)="addEmoji($event)" title="Choose your emoji"></emoji-mart> -->
-            <input type="file" hidden id="img" #img accept="image/*" (change)="uploadImage($event)">
-            <button type="submit" class="btn btn-primary" >AddNote</button>
+            <input type="text" placeholder="Title" class="form-control mb-2" formControlName="title">
+            <input type="text" placeholder="Message" class="form-control mb-2" formControlName="notesMessage">
+            <input type="file" class="mb-2" id="img" #img accept="image/*" (change)="uploadImage($event)">
+            <button type="submit" class="btn btn-success">Add</button>
           </form>
-          <div class="d-flex justify-content-around">
-            <button class="btn"><mat-icon>person_add</mat-icon></button>
-            <button class="btn" (click)="img.click()"><mat-icon>insert_photo</mat-icon></button>
-          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
-  <div>
-    <div class="d-flex flex-row flex-wrap" style=" width: 100%; height: 50%; margin-top: 50px;">
+</div>
+<div>
+  <div class="d-flex flex-row flex-wrap PinnedNotes">
     <div *ngFor="let notes of PinnedArray ;let i = index" class="display-pinned">
       <div *ngIf=" (notes.pin===1)">
-      <h3>Pinned</h3>
-            <mat-card class="example-card">
-              <button class="btn" (click)="unpin(notes.noteId)" title="PIN"><mat-icon>bookmark</mat-icon></button>
-              <mat-card-header>
-                <mat-card-title><input type="text"   class="showValue" [value]=notes.title  placeholder="Title ...." disabled></mat-card-title>
-                <mat-card-subtitle><input type="text" name="" id=""  [value]=notes.text  class="showValue"  placeholder="Text.." disabled></mat-card-subtitle>
-              </mat-card-header>
-              <div *ngIf="notes.messageType === Image">
-              <img  mat-card-image src=notes.images>
-             </div>
-              <mat-card-content>
-                <div *ngIf="notes.isReminder"> <p>Remainder Added <mat-icon>timer</mat-icon> </p></div>
-                    <div *ngIf="notes.isShared"> <p>Shared Added <mat-icon>person_add</mat-icon> </p></div>
-                <div [visible]="notes.isVisible" cCollapse #card="cCollapse">
-                  <c-card class="mt-3 shadow">
-                    <c-card-body>
-                      <div class="footer d-flex flex-wrap ">
-                        <button class="btn"  (click)="showDatePicker(notes.noteId)" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"> <mat-icon>timer</mat-icon></button>
-                        <button class="btn" title="share" (click)="Share(notes.noteId)"><mat-icon>person_add</mat-icon></button>
-                        <button class="btn" (click)="img.click()"><mat-icon>insert_photo</mat-icon></button>
-                        <button class="btn" (click)="moveToTrash(notes.noteId)"><mat-icon>delete</mat-icon></button>
-                        <button class="btn" (click)="moveToArchieve(notes.noteId)"><mat-icon>archive</mat-icon></button>
-                      </div>
-                    </c-card-body>
-                  </c-card>
-                </div>
-              </mat-card-content>
-              <mat-card-actions>
-                <button mat-button (click)="toggleCollapsePin(i)">Options</button>
-              </mat-card-actions>
-            </mat-card>
+
+        <mat-card class="example-card me-3 mb-3" style="border-radius: 10px;">
+          <div class="d-flex flex-row justify-content-between"
+            style="height: 40px; border-bottom: 1px solid gainsboro;">
+            <button class="btn" (click)="unpin(notes.noteId)" title="PIN"><mat-icon>bookmark</mat-icon></button>
+            <button class="btn" (click)="toggleCollapsePin(i)"><img
+                src="https://img.icons8.com/?size=512&id=22261&format=png" alt=""
+                style="height: 10px;float: right;"></button>
           </div>
-        </div>
-        <hr>
-      </div>
-  </div>
-  <div class="collapse" id="collapseExample">
-    <div class="card card-body">
-      <form #emailForm = "ngForm" (ngSubmit)="onSubmit(emailForm)">
-        <label for="emailEnter"> Enter Your Email </label>
-        <input type="email" id="user_email" name="email" ngModel #email="ngModel" required  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"> 
-        <div class="alert alert-danger" *ngIf="email.errors?.['pattern']">
-                Please enter a valid email
-        </div>
-        <button type="submit" class="btn btn-primary" [disabled]="!emailForm.valid">Send Link </button>
-      </form>
-    </div>
-  </div>
-  <div class="showNotes">
-    <div class="d-flex flex-row flex-wrap" style=" width: 100%; height: 100%; margin-top: 50px;">
-      <div *ngFor="let notes of notesArray ; let i = index " class="display">
-        <mat-card class="example-card">
-      
-            <div class="d-flex flex-row justify-content-between">
-          <button class="btn" (click)="pinNote(notes.noteId)" title="PIN"><mat-icon>bookmark_border</mat-icon></button>
-          <button class="btn" type="button" (click)="editNote(notes)"><mat-icon>create</mat-icon></button>
-        </div>
-          <p> {{notes.createdAt | date : 'medium'}}</p>
-          <mat-card-header>
-          
-            <mat-card-title><input type="text" #title id="title" (change)="getValueOfTitle($event)" class="showValue" [value]=notes.title   placeholder="Title ...." ></mat-card-title>
-            <mat-card-subtitle><input type="text" #message id="message" [value]=notes.text (change)="getValueOfMessage($event)" class="showValue"  placeholder="Text.." ></mat-card-subtitle>
-            <input type="file" hidden id="img" #img accept="image/*" (change)="uploadImage($event)">
-          </mat-card-header>
-          <div *ngIf="notes.messageType === Image">
-            <img  mat-card-image [src]=notes.images style=" width: 50px; height: 50px;" >
-          </div>
-          <mat-card-content>
-            <div *ngIf="notes.isReminder"> <p>Remainder Added <mat-icon>timer</mat-icon> </p></div>
-            <div *ngIf="notes.isShared"> <p>Shared Added <mat-icon>person_add</mat-icon> </p></div>
-            <div [visible]="notes.isVisible" cCollapse #card="cCollapse">
-              <c-card class="mt-3 shadow">
-                <c-card-body>
-                  <div class="footer d-flex flex-wrap ">
-                    <button class="btn"  (click)="showDatePicker(notes.noteId)" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"> <mat-icon>timer</mat-icon></button>
-                    <button class="btn" title="share" (click)="Share(notes.noteId)"><mat-icon>person_add</mat-icon></button>
-                    <button class="btn" (click)="img.click()"><mat-icon>insert_photo</mat-icon></button>
-                    <button class="btn" (click)="moveToTrash(notes.noteId)"><mat-icon>delete</mat-icon></button>
-                    <button class="btn" (click)="moveToArchieve(notes.noteId)"><mat-icon>archive</mat-icon></button>
-                  </div>
-                </c-card-body>
-              </c-card>
+          <mat-card-subtitle style="margin-left: 14px;">
+            <span> {{notes.createdAt | date : 'medium'}}</span>
+          </mat-card-subtitle>
+          <mat-card-subtitle style="margin-left: 10px;"><span>Title: </span><input type="text" [value]=notes.title
+              class="showValue" disabled></mat-card-subtitle>
+
+
+          <div [visible]="notes.isVisible" cCollapse #card="cCollapse">
+
+            <mat-card-subtitle style="margin-left: 10px;"><small>Message: </small><input type="text" [value]=notes.text
+                class="showValue" disabled></mat-card-subtitle>
+            <div *ngIf="notes.messageType === Image">
+              <img mat-card-image [src]=notes.images style="width: 270px;height: 200px;border-radius:0 0 10px 10px;">
             </div>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button (click)="toggleCollapse(i)">Options</button>
-          </mat-card-actions>
+          </div>
         </mat-card>
       </div>
     </div>
+    <hr>
+  </div>
+
+  <div class="collapse" id="collapseExample" style="margin-left: 20px;">
+    <div class="card card-body">
+      <form #emailForm="ngForm" (ngSubmit)="onSubmit(emailForm)">
+        <label for="emailEnter">Email</label>
+        <input type="email" id="user_email" name="email" ngModel #email="ngModel" required
+          pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
+        <div class="alert alert-danger" *ngIf="email.errors?.['pattern']">
+          Enter a Valid Email
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!emailForm.valid">Share</button>
+      </form>
+    </div>
+  </div>
+  <div class="d-flex flex-row flex-wrap showNotes">
+    <div *ngFor="let notes of notesArray ; let i = index " class="display">
+      <mat-card class="example-card me-3 mb-3" style="border-radius: 10px;">
+        <div class="d-flex flex-row justify-content-between" style="height: 40px; border-bottom: 1px solid gainsboro;">
+          <button class="btn" (click)="pinNote(notes.noteId)" title="PIN"><mat-icon>bookmark_border</mat-icon></button>
+          <button class="btn" type="button" (click)="editNote(notes)"><mat-icon>create</mat-icon></button>
+          <button class="btn" (click)="toggleCollapse(i)"><img
+              src="https://img.icons8.com/?size=512&id=22261&format=png" alt=""
+              style="height: 10px;float: right;"></button>
+        </div>
+        <mat-card-subtitle style="margin-left: 14px;">
+          <span> {{notes.createdAt | date : 'medium'}}</span>
+        </mat-card-subtitle>
+        <mat-card-subtitle style="margin-left: 14px;"><span>Title: </span><input type="text" #title id="title"
+            (change)="getValueOfTitle($event)" class="showValue" [value]=notes.title placeholder="Title ....">
+        </mat-card-subtitle>
+        <mat-card-content>
+          <div *ngIf="notes.isReminder">
+            <p>Remainder Added <mat-icon>timer</mat-icon> </p>
+          </div>
+          <div *ngIf="notes.isShared">
+            <p>Shared Added <mat-icon>person_add</mat-icon> </p>
+          </div>
+          <div [visible]="notes.isVisible" cCollapse #card="cCollapse">
+            <c-card class="mt-3 shadow">
+              <c-card-body>
+                <mat-card-subtitle><span>Message: </span><input type="text" #message id="message" [value]=notes.text
+                    (change)="getValueOfMessage($event)" class="showValue" placeholder="Text.."></mat-card-subtitle>
+                <input type="file" hidden id="img" #img accept="image/*" (change)="uploadImage($event)">
+
+                <div *ngIf="notes.messageType === Image">
+                  <img mat-card-image [src]=notes.images
+                    style="width: 270px;height: 200px;border-radius:0 0 10px 10px;">
+
+                </div>
+                <div class="footer d-flex flex-wrap ">
+                  <button class="btn" (click)="showDatePicker(notes.noteId)" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"> <mat-icon>timer</mat-icon></button>
+                  <button class="btn" title="share"
+                    (click)="Share(notes.noteId)"><mat-icon>person_add</mat-icon></button>
+                  <button class="btn" (click)="img.click()"><mat-icon>insert_photo</mat-icon></button>
+                  <button class="btn" (click)="moveToTrash(notes.noteId)"><mat-icon>delete</mat-icon></button>
+                  <button class="btn" (click)="moveToArchieve(notes.noteId)"><mat-icon>archive</mat-icon></button>
+                </div>
+              </c-card-body>
+            </c-card>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>
-</div>
 
-<!-- // Alarm Modal -->
+
+<!-- Reminder PopUp -->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h1 class="modal-title fs-5" id="exampleModalLabel">Add Timer</h1>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-      <input type="datetime-local" (change)="onDate($event)" (change)="validateRemainder($event)">
-      <p *ngIf="validateTimer" style="color: red">
-         Please Enter A valid Date
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary" [disabled]="validateTimer" (click)="createTimer()">Send</button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Reminder</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="datetimePicker" class="form-label">Select Date and Time</label>
+          <input type="datetime-local" id="datetimePicker" class="form-control" (change)="onDate($event)"
+            (change)="validateRemainder($event)">
+        </div>
+        <p *ngIf="validateTimer" class="text-danger">
+          Please enter a valid date and time.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="validateTimer" (click)="createTimer()">Send</button>
+      </div>
     </div>
   </div>
 </div>
-
-
